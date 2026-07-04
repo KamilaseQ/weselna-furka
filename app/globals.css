@@ -1,0 +1,201 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cream-100 text-ink antialiased;
+    font-family: var(--font-sans);
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    @apply font-medium tracking-tight;
+  }
+  ::selection {
+    background: #1a1a1a;
+    color: #f6f4ef;
+  }
+}
+
+@layer components {
+  .site-container {
+    @apply mx-auto w-full max-w-site px-5 sm:px-8 lg:px-12;
+  }
+  .eyebrow {
+    @apply text-[11px] font-medium uppercase tracking-wider2 text-gold;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium transition-all duration-300 ease-out focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-wine/25 active:scale-[0.98];
+  }
+  /* primary CTA — the one saturated element on every screen */
+  .btn-primary {
+    @apply btn bg-wine text-cream-50 hover:bg-wine-deep hover:shadow-float;
+  }
+  .btn-dark {
+    @apply btn bg-ink text-cream-50 hover:bg-ink-soft hover:shadow-float;
+  }
+  .btn-ghost {
+    @apply btn border border-ink/15 bg-transparent text-ink hover:border-ink/40 hover:bg-white/40;
+  }
+  /* light button for dark bands */
+  .btn-light {
+    @apply btn bg-cream-50 text-ink hover:bg-white hover:shadow-float;
+  }
+  .btn-gold {
+    @apply btn bg-gold text-white hover:bg-gold-deep;
+  }
+  .field-label {
+    @apply mb-2 block text-sm font-medium text-ink-soft;
+  }
+  .field {
+    @apply w-full rounded-xl border border-ink/12 bg-white/70 px-4 py-3.5 text-[15px] text-ink placeholder:text-ink-faint outline-none transition focus:border-gold/60 focus:bg-white focus:ring-4 focus:ring-gold/10;
+  }
+  .surface-card {
+    @apply rounded-2xl border border-ink/8 bg-white/60 shadow-card backdrop-blur-sm;
+  }
+  /* thin gold divider used under eyebrows / between summary blocks */
+  .hairline {
+    @apply h-px w-full bg-gradient-to-r from-gold/50 via-ink/10 to-transparent;
+  }
+  /* magazine-style section header: eyebrow flanked by hairlines */
+  .eyebrow-rules {
+    @apply flex items-center gap-4 text-[11px] font-medium uppercase tracking-wider2 text-gold;
+  }
+  .eyebrow-rules::before,
+  .eyebrow-rules::after {
+    content: "";
+    @apply h-px flex-1 bg-ink/10;
+  }
+  /* big editorial index numeral ("01", "02") */
+  .index-num {
+    font-family: var(--font-serif);
+    @apply text-5xl italic leading-none text-gold/50;
+  }
+}
+
+/* ——— editorial image treatments ——— */
+
+/* arched (portal) crop — classic magazine window */
+.arch {
+  border-radius: 999px 999px 1.5rem 1.5rem;
+}
+/* thin offset outline behind a photo, so the image reads as a framed plate */
+.frame-offset {
+  position: relative;
+}
+.frame-offset::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translate(14px, -14px);
+  border: 1px solid rgba(176, 141, 87, 0.45); /* gold/45 */
+  border-radius: inherit;
+  pointer-events: none;
+}
+/* vertical small-caps caption running along a photo edge */
+.caption-vert {
+  writing-mode: vertical-rl;
+  @apply text-[10px] uppercase tracking-wider2 text-ink-faint;
+}
+
+/* ——— scroll reveal ——— */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ——— reviews marquee ——— */
+.marquee {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 6%,
+    black 94%,
+    transparent
+  );
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .marquee-track {
+    animation: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Subtle film-grain free decorative grid used behind hero/studio shots */
+.studio-floor {
+  background-image:
+    radial-gradient(ellipse 80% 60% at 50% 35%, rgba(255, 255, 255, 0.9), transparent 70%),
+    linear-gradient(180deg, #f3f0ea 0%, #ece7dd 100%);
+}
+
+/* ——— Leaflet route map ——— */
+.leaflet-container {
+  font-family: var(--font-sans);
+  cursor: crosshair;
+}
+/* soften the tiles towards the site's warm palette */
+.leaflet-tile-pane {
+  filter: saturate(0.85) sepia(0.06);
+}
+.route-pin {
+  position: relative;
+}
+.route-pin-badge {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  background: #6e1e2c;
+  color: #fbfaf7;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(26, 26, 26, 0.3);
+}
+.route-pin-tail {
+  position: absolute;
+  left: 50%;
+  top: 24px;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 12px;
+  background: #6e1e2c;
+}
+
+/* hide scrollbar for horizontal strips */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.drag-none { -webkit-user-drag: none; user-select: none; touch-action: none; }

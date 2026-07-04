@@ -1,0 +1,168 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import Image from "next/image";
+import { aboutImage, carImageSets } from "@/data/images";
+import { TrustBadges } from "@/components/TrustBadges";
+import { SectionHeading } from "@/components/SectionHeading";
+import { ReviewsStrip } from "@/components/ReviewsStrip";
+import { CtaBand } from "@/components/CtaBand";
+import { Reveal } from "@/components/Reveal";
+import { ArrowRight } from "@/components/icons";
+
+export const metadata: Metadata = {
+  title: "O nas — Weselna Furka",
+  description:
+    "Dbamy o każdy przyjazd. Rezerwacja ma być prosta, a dzień ślubu spokojny.",
+};
+
+const steps = [
+  {
+    n: "01",
+    title: "Prośba o rezerwację",
+    desc: "Wybieracie auto, termin i dodatki online. Cena znana od razu, bez zobowiązań.",
+  },
+  {
+    n: "02",
+    title: "Potwierdzenie terminu",
+    desc: "Jedna osoba potwierdza dostępność i pozostaje z Wami w kontakcie do końca.",
+  },
+  {
+    n: "03",
+    title: "Przygotowanie auta",
+    desc: "Mycie, detailing i dekoracje zakładane dzień przed trasą — według Waszej konfiguracji.",
+  },
+  {
+    n: "04",
+    title: "Dzień ślubu",
+    desc: "Kierowca melduje się z buforem czasu. Wy macie myśleć wyłącznie o sobie.",
+  },
+];
+
+export default function ONasPage() {
+  return (
+    <>
+      {/* hero */}
+      <section className="site-container py-16">
+        <div className="grid items-center gap-10 lg:grid-cols-2">
+          <Reveal>
+            <p className="eyebrow">O nas</p>
+            <h1 className="mt-3 text-5xl leading-[1.05] text-ink sm:text-6xl">
+              Dbamy o każdy przyjazd.
+            </h1>
+            <p className="mt-5 max-w-md text-[17px] leading-relaxed text-ink-muted">
+              Rezerwacja ma być prosta, a dzień ślubu spokojny. Zbudowaliśmy
+              Weselną Furkę, bo wynajem auta na wesele nie powinien oznaczać
+              wymiany piętnastu maili i niepewności co do ceny.
+            </p>
+            <p className="mt-4 max-w-md text-[17px] leading-relaxed text-ink-muted">
+              Wybieracie auto, widzicie cenę od razu, a jedna osoba prowadzi Was
+              od pierwszej wiadomości aż po przyjazd kierowcy.
+            </p>
+            <Link href="/flota" className="btn-primary mt-7">
+              Poznaj flotę
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Reveal>
+          <Reveal delay={150}>
+            <div className="arch frame-offset relative mx-auto aspect-[4/5] max-w-[440px] overflow-hidden shadow-card">
+              <Image
+                src={aboutImage.src}
+                alt={aboutImage.alt}
+                fill
+                priority
+                sizes="(min-width: 1024px) 440px, 90vw"
+                className="object-cover"
+              />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* how we work */}
+      <section className="bg-cream-50/60 py-20">
+        <div className="site-container">
+          <Reveal>
+            <SectionHeading
+              eyebrow="Jak pracujemy"
+              title="Od rezerwacji po dzień ślubu."
+            />
+          </Reveal>
+          <div className="mt-14 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            {steps.map((s, i) => (
+              <Reveal key={s.n} delay={i * 120}>
+                <div className="relative border-t border-ink/10 pt-5">
+                  <p className="font-serif text-5xl italic text-gold/60">{s.n}</p>
+                  <h3 className="mt-3 font-serif text-xl text-ink">{s.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+                    {s.desc}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* detail strip */}
+      <section className="site-container py-20">
+        <div className="grid items-center gap-10 lg:grid-cols-2">
+          <Reveal>
+            <div className="frame-offset relative aspect-[16/11] overflow-hidden rounded-3xl shadow-card">
+              <Image
+                src={carImageSets["mercedes-s-klasa"].gallery[1].src}
+                alt={carImageSets["mercedes-s-klasa"].gallery[1].alt}
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          </Reveal>
+          <Reveal delay={150}>
+            <p className="eyebrow">Detale</p>
+            <h2 className="mt-3 text-4xl leading-[1.05] text-ink sm:text-5xl">
+              Auto gotowe w najmniejszym szczególe.
+            </h2>
+            <p className="mt-5 max-w-md text-[17px] leading-relaxed text-ink-muted">
+              Każde auto przechodzi mycie i detailing przed trasą, a dekoracje
+              zakładamy według Waszej konfiguracji. W środku czekają woda
+              i chusteczki — drobiazgi, które robią różnicę.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* why us */}
+      <section className="bg-cream-50/60 py-20">
+        <div className="site-container">
+          <Reveal>
+            <SectionHeading
+              eyebrow="Dlaczego my"
+              title="Mniej formalności. Większa pewność."
+            />
+          </Reveal>
+          <div className="mt-12">
+            <TrustBadges />
+          </div>
+        </div>
+      </section>
+
+      {/* reviews */}
+      <section className="py-20">
+        <div className="site-container">
+          <Reveal>
+            <SectionHeading eyebrow="Opinie par" title="Co mówią pary." />
+          </Reveal>
+        </div>
+        <Reveal delay={120}>
+          <div className="mt-10">
+            <ReviewsStrip />
+          </div>
+        </Reveal>
+      </section>
+
+      <Reveal>
+        <CtaBand />
+      </Reveal>
+    </>
+  );
+}
