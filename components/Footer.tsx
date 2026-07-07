@@ -42,7 +42,7 @@ export function Footer() {
               </a>
             </li>
             <li>
-              <a href="mailto:kontakt@weselnafurka.pl" className="inline-flex items-center gap-2 transition-colors hover:text-ink">
+              <a href="mailto:weselnafurka@gmail.com" className="inline-flex items-center gap-2 transition-colors hover:text-ink">
                 <MailIcon className="h-4 w-4 text-gold" /> kontakt@weselnafurka.pl
               </a>
             </li>
