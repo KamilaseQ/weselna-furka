@@ -6,14 +6,16 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { visibleCars, availabilityMeta } from "@/data/cars";
 import { addons } from "@/data/addons";
 import { getCarImages } from "@/data/images";
-import { HOUR_OPTIONS, calculatePrice } from "@/lib/pricing";
+import { calculatePrice, INCLUDED_KM, KM_RATE } from "@/lib/pricing";
 import { formatPLNShort } from "@/lib/format";
-import { Calendar, formatPolishDate, nextSeasonSaturday } from "./Calendar";
+import { Calendar, formatPolishDate, todayISO } from "./Calendar";
 import { RouteMap, type MapStop } from "./RouteMap";
 import {
   searchAddress,
   reverseGeocode,
   fetchDrivingRoute,
+  isOutsideRadius,
+  SERVICE_RADIUS_KM,
   type GeoResult,
   type DrivingRoute,
 } from "@/lib/geo";
@@ -63,7 +65,7 @@ export function Configurator() {
   const [dir, setDir] = useState<"fwd" | "back">("fwd");
 
   /* 1 — date */
-  const [date, setDate] = useState(params.get("date") || nextSeasonSaturday());
+  const [date, setDate] = useState(params.get("date") || todayISO());
 
   /* 2 — route */
   const stopId = useRef(0);
@@ -73,6 +75,10 @@ export function Configurator() {
   );
   const [route, setRoute] = useState<DrivingRoute | null>(null);
   const [routing, setRouting] = useState(false);
+  /* opt-in for routes reaching beyond the 100 km standard radius —
+     these are always priced individually after the request */
+  const [customRoute, setCustomRoute] = useState(false);
+  const [radiusWarn, setRadiusWarn] = useState(false);
 
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<GeoResult[]>([]);
@@ -87,11 +93,8 @@ export function Configurator() {
   const gallery = getCarImages(carSlug).gallery;
   const [photoIdx, setPhotoIdx] = useState(0);
 
-  /* 4 — time & addons */
-  const [hours, setHours] = useState(() => {
-    const h = Number(params.get("hours"));
-    return HOUR_OPTIONS.some((o) => o.hours === h) ? h : 8;
-  });
+  /* 4 — addons (rental time is no longer chosen here — standard day service) */
+  const hours = 6;
   const [activeAddons, setActiveAddons] = useState<string[]>(() => {
     const fromUrl = (params.get("addons") || "")
       .split(",")
@@ -153,6 +156,18 @@ export function Configurator() {
   };
 
   /* route helpers */
+
+  /** guard: a point beyond the 100 km radius is only allowed once the couple
+      opts into a custom (individually priced) route */
+  const allowPoint = (lat: number, lng: number) => {
+    if (!customRoute && isOutsideRadius(lat, lng)) {
+      setRadiusWarn(true);
+      return false;
+    }
+    setRadiusWarn(false);
+    return true;
+  };
+
   const addStop = (lat: number, lng: number, name: string) =>
     setStops((prev) =>
       prev.length >= MAX_STOPS ? prev : [...prev, { id: nextStopId(), name, lat, lng }]
@@ -160,6 +175,7 @@ export function Configurator() {
 
   const addStopFromMap = (lat: number, lng: number) => {
     if (stops.length >= MAX_STOPS) return;
+    if (!allowPoint(lat, lng)) return;
     const id = nextStopId();
     setStops((prev) => [...prev, { id, name: "", lat, lng }]);
     // fill the address in the background; keep anything the user typed meanwhile
@@ -172,6 +188,7 @@ export function Configurator() {
   };
 
   const addStopFromResult = (r: GeoResult) => {
+    if (!allowPoint(r.lat, r.lng)) return;
     addStop(r.lat, r.lng, r.label);
     setQuery("");
     setResults([]);
@@ -195,16 +212,26 @@ export function Configurator() {
     [carSlug, hours, activeAddons, km]
   );
 
+  /* a route beyond the radius (opted-in or dragged there) makes the *route*
+     individually priced; a selected "wycena indywidualna" add-on makes the
+     whole *total* individual too */
+  const hasFarStop = stops.some((s) => isOutsideRadius(s.lat, s.lng));
+  const individualRoute = customRoute || hasFarStop;
+  const hasQuoteAddon = activeAddons.some(
+    (id) => addons.find((a) => a.id === id)?.quote
+  );
+  const individualQuote = individualRoute || hasQuoteAddon;
+
   const goCheckout = () => {
     const q = new URLSearchParams({
       car: carSlug,
       date,
-      hours: String(hours),
-      km: String(km),
+      km: String(individualRoute ? 0 : km),
       stops: stops.map((s) => s.name.trim()).filter(Boolean).join("|"),
       addons: activeAddons.join(","),
       total: String(price.total),
     });
+    if (individualQuote) q.set("custom", "1");
     router.push(`/rezerwacja?${q.toString()}`);
   };
 
@@ -213,7 +240,6 @@ export function Configurator() {
       const q = new URLSearchParams({
         car: carSlug,
         date,
-        hours: String(hours),
         stops: stops
           .map((s) => `${s.lat.toFixed(5)}~${s.lng.toFixed(5)}~${s.name.trim()}`)
           .join("|"),
@@ -301,7 +327,11 @@ export function Configurator() {
                 Cena
               </p>
               <p className="font-serif text-2xl leading-none text-ink">
-                {step < 3 ? "— — —" : formatPLNShort(price.total)}
+                {step < 3
+                  ? "— — —"
+                  : individualQuote
+                    ? "Indywidualna"
+                    : formatPLNShort(price.total)}
               </p>
             </div>
           </div>
@@ -339,12 +369,28 @@ export function Configurator() {
         {step === 2 && (
           <StepShell
             title="Trasa"
-            subtitle="Dodajcie kolejne punkty dnia — wpisując adres albo klikając na mapie."
+            subtitle="Zaznaczcie punkty Waszego dnia — a my zajmiemy się resztą."
             width="max-w-6xl"
           >
             <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
               {/* map */}
               <div>
+                {/* concise how-to — two clear ways to add a point */}
+                <div className="mb-3 flex flex-col gap-1.5 rounded-xl border border-wine/20 bg-wine/5 px-4 py-3 text-sm text-ink-soft sm:flex-row sm:items-center sm:gap-4">
+                  <span className="flex items-center gap-2">
+                    <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-wine text-[11px] font-semibold text-cream-50">
+                      1
+                    </span>
+                    Kliknij punkt na mapie
+                  </span>
+                  <span className="hidden text-ink-faint sm:inline">albo</span>
+                  <span className="flex items-center gap-2">
+                    <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-wine text-[11px] font-semibold text-cream-50">
+                      2
+                    </span>
+                    wpisz dokładny adres obok
+                  </span>
+                </div>
                 <div className="overflow-hidden rounded-3xl border border-ink/10 shadow-card">
                   <RouteMap
                     stops={stops}
@@ -355,7 +401,8 @@ export function Configurator() {
                   />
                 </div>
                 <p className="mt-3 text-center text-xs text-ink-faint">
-                  Pinezki można przesuwać. Kolejność punktów = kolejność listy.
+                  Pinezkę przesuniesz palcem lub myszką — także na telefonie.
+                  Kolejność punktów = kolejność listy.
                 </p>
               </div>
 
@@ -442,18 +489,58 @@ export function Configurator() {
                       Długość trasy
                     </span>
                     <span className="font-serif text-2xl text-ink">
-                      {stops.length < 2 ? "—" : routing ? "…" : `${km} km`}
+                      {individualRoute
+                        ? "indyw."
+                        : stops.length < 2
+                          ? "—"
+                          : routing
+                            ? "…"
+                            : `${km} km`}
                     </span>
                   </div>
                   <p className="mt-2 text-xs text-ink-faint">
-                    {stops.length < 2
-                      ? "Dodajcie co najmniej dwa punkty, aby policzyć trasę."
-                      : route?.geometry
-                        ? "Dystans po drogach, według kolejności punktów."
-                        : "Dystans szacunkowy."}{" "}
-                    Pierwsze 40 km w cenie.
+                    {individualRoute
+                      ? "Trasa niestandardowa — dokładną cenę ustalimy indywidualnie po zgłoszeniu."
+                      : stops.length < 2
+                        ? "Dodajcie co najmniej dwa punkty, aby policzyć trasę."
+                        : route?.geometry
+                          ? "Dystans po drogach, według kolejności punktów."
+                          : "Dystans szacunkowy."}{" "}
+                    {!individualRoute &&
+                      `Pierwsze ${INCLUDED_KM} km w cenie, każdy kolejny +${KM_RATE} zł.`}
                   </p>
                 </div>
+
+                {/* far-point warning */}
+                {radiusWarn && !customRoute && (
+                  <p className="rounded-xl border border-gold/40 bg-gold/10 px-4 py-3 text-xs leading-relaxed text-ink-soft">
+                    Ten punkt jest dalej niż {SERVICE_RADIUS_KM} km od centrum
+                    Warszawy. Zaznaczcie „Trasa niestandardowa”, aby go dodać — taką
+                    trasę wyceniamy indywidualnie.
+                  </p>
+                )}
+
+                {/* custom-route opt-in */}
+                <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-ink/10 bg-white/60 p-4 text-sm text-ink-soft transition-colors hover:border-ink/25">
+                  <input
+                    type="checkbox"
+                    checked={customRoute}
+                    onChange={(e) => {
+                      setCustomRoute(e.target.checked);
+                      if (e.target.checked) setRadiusWarn(false);
+                    }}
+                    className="mt-0.5 h-5 w-5 shrink-0 accent-wine"
+                  />
+                  <span>
+                    <span className="font-medium text-ink">
+                      Trasa niestandardowa (poza {SERVICE_RADIUS_KM} km od Warszawy)
+                    </span>
+                    <span className="mt-0.5 block text-xs text-ink-muted">
+                      Odblokowuje dowolne punkty na mapie. Cena za taką trasę jest
+                      wyceniana indywidualnie po wypełnieniu formularza.
+                    </span>
+                  </span>
+                </label>
               </div>
             </div>
           </StepShell>
@@ -517,12 +604,23 @@ export function Configurator() {
                   );
                 })}
 
-                <div className="flex items-center gap-2 rounded-xl bg-cream-200/60 px-4 py-3 text-sm text-ink-soft">
-                  <DriverIcon className="h-5 w-5 shrink-0 text-gold" />
-                  <span>
-                    <strong className="font-medium">Kierowca w cenie</strong> — w
-                    garniturze, bez dopłat.
-                  </span>
+                <div className="rounded-2xl bg-cream-200/60 px-4 py-4 text-sm text-ink-soft">
+                  <p className="flex items-center gap-2 font-medium text-ink">
+                    <DriverIcon className="h-5 w-5 shrink-0 text-gold" />
+                    W cenie, razem z autem:
+                  </p>
+                  <ul className="mt-2.5 space-y-1.5">
+                    {[
+                      "Prywatny kierowca w garniturze",
+                      "Ślubna tablica rejestracyjna",
+                      "Woda i chusteczki dla pary młodej",
+                    ].map((item) => (
+                      <li key={item} className="flex items-start gap-2">
+                        <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-wine" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
 
@@ -574,33 +672,10 @@ export function Configurator() {
         {step === 4 && (
           <StepShell
             title="Dodatki"
-            subtitle="Czas wynajmu i przygotowanie auta."
+            subtitle="Dopieść szczegóły — resztą zajmiemy się my."
             width="max-w-3xl"
           >
             <div className="space-y-9">
-              <div>
-                <p className="field-label">Czas wynajmu</p>
-                <div className="grid grid-cols-4 gap-2">
-                  {HOUR_OPTIONS.map((opt) => {
-                    const selected = opt.hours === hours;
-                    return (
-                      <button
-                        key={opt.id}
-                        type="button"
-                        onClick={() => setHours(opt.hours)}
-                        className={`rounded-xl border py-3 text-sm transition-all duration-300 ${
-                          selected
-                            ? "border-wine bg-wine text-cream-50 shadow-card"
-                            : "border-ink/12 bg-white/40 text-ink-soft hover:border-ink/30"
-                        }`}
-                      >
-                        {opt.label}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
               <div>
                 <p className="field-label">Dodatki</p>
                 <div className="space-y-2">
@@ -630,7 +705,7 @@ export function Configurator() {
                           <span className="flex items-center justify-between gap-2">
                             <span className="font-medium text-ink">{a.name}</span>
                             <span className="text-sm font-medium text-ink-soft">
-                              +{formatPLNShort(a.price)}
+                              {a.quote ? "wycena indyw." : `+${formatPLNShort(a.price)}`}
                             </span>
                           </span>
                           <span className="mt-0.5 block text-xs text-ink-muted">
@@ -647,11 +722,18 @@ export function Configurator() {
                 <div className="flex items-end justify-between border-t border-ink/10 pt-5">
                   <span className="text-ink-muted">Razem</span>
                   <span className="font-serif text-4xl text-ink">
-                    {formatPLNShort(price.total)}
+                    {individualQuote ? "Wycena indywidualna" : formatPLNShort(price.total)}
                   </span>
                 </div>
                 <p className="mt-1.5 text-right text-xs text-ink-faint">
-                  Kierowca w cenie{km > 40 ? ` · trasa ${km} km` : ""}
+                  {individualRoute
+                    ? "Trasę niestandardową wyceniamy po zgłoszeniu"
+                    : hasQuoteAddon
+                      ? "Wybrane pozycje wyceniamy indywidualnie"
+                      : `Kierowca w cenie${km > INCLUDED_KM ? ` · trasa ${km} km` : ""}`}
+                </p>
+                <p className="mt-0.5 text-right text-[11px] text-ink-faint">
+                  Ceny netto.
                 </p>
                 <p className="mt-4 flex items-center gap-2 text-xs text-ink-faint">
                   <span className="h-1.5 w-1.5 rounded-full bg-avail" />
@@ -681,7 +763,7 @@ export function Configurator() {
                   {copied ? "Link skopiowany" : "Wyślij partnerowi"}
                 </button>
                 <button onClick={goCheckout} className="btn-primary">
-                  Przejdź do rezerwacji
+                  Poproś o rezerwację
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </>

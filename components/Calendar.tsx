@@ -36,6 +36,11 @@ export function nextSeasonSaturday(): string {
   return toISODate(d);
 }
 
+/** today's local date, ISO yyyy-mm-dd — the calendar's default selection */
+export function todayISO(): string {
+  return toISODate(new Date());
+}
+
 function startOfDay(d: Date): Date {
   return new Date(d.getFullYear(), d.getMonth(), d.getDate());
 }
@@ -136,7 +141,8 @@ export function Calendar({ value, onChange, min, className = "" }: CalendarProps
         ))}
       </div>
 
-      {/* days */}
+      {/* days — each cell fills its grid column so nothing overflows on
+          narrow phones; the button is a square capped at 2.5rem */}
       <div className="grid grid-cols-7 gap-y-1">
         {cells.map((d, i) => {
           if (!d) return <span key={`e${i}`} />;
@@ -152,7 +158,7 @@ export function Calendar({ value, onChange, min, className = "" }: CalendarProps
               onClick={() => onChange(iso)}
               aria-label={formatPolishDate(iso)}
               aria-pressed={isSelected}
-              className={`relative mx-auto grid h-10 w-10 place-items-center rounded-full text-sm transition-all duration-200 ${
+              className={`relative mx-auto grid aspect-square w-full max-w-[2.5rem] place-items-center rounded-full text-sm transition-all duration-200 ${
                 isSelected
                   ? "bg-wine font-medium text-cream-50 shadow-card"
                   : disabled

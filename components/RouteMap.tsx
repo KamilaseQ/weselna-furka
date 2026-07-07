@@ -109,12 +109,16 @@ export function RouteMap({
       const icon = L.divIcon({
         className: "route-pin",
         html: `<span class="route-pin-badge">${i + 1}</span><span class="route-pin-tail"></span>`,
-        iconSize: [28, 40],
-        iconAnchor: [14, 38],
+        iconSize: [30, 42],
+        iconAnchor: [15, 40],
       });
-      const marker = L.marker([s.lat, s.lng], { icon, draggable: true }).addTo(
-        layer
-      );
+      const marker = L.marker([s.lat, s.lng], {
+        icon,
+        draggable: true,
+        autoPan: true,
+        // larger touch tolerance makes pins easy to grab on phones
+        riseOnHover: true,
+      }).addTo(layer);
       marker.on("dragend", () => {
         const p = marker.getLatLng();
         onMoveRef.current(s.id, p.lat, p.lng);

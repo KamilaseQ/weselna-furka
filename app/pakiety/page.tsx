@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   title: "Gotowe pakiety — Weselna Furka",
   description:
     "Basic, Standard i Premium w jednej tabeli — porównajcie punkt po punkcie, co dostajecie. Kierowca w cenie, bez dopłat na miejscu.",
+  // packages are temporarily hidden from the flow — keep the route working but
+  // out of search results
+  robots: { index: false, follow: false },
 };
 
 /** cell content for the comparison matrix */

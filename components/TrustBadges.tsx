@@ -2,28 +2,24 @@ import { Reveal } from "./Reveal";
 
 const promises = [
   {
-    title: "Punktualność albo zwrot godziny",
-    desc: "Podstawienie z buforem czasu, trasa zaplanowana dzień wcześniej.",
+    title: "Punktualność ponad wszystko",
+    desc: "Szofer podjeżdża zawsze przed czasem — żeby stres tego dnia nigdy nie dotyczył auta.",
   },
   {
-    title: "Cena końcowa znana przy rezerwacji",
-    desc: "Kwota z podsumowania jest wiążąca. Bez dopłat na miejscu.",
+    title: "Bez ukrytych opłat",
+    desc: "Cena z podsumowania jest wiążąca. Żadnych dopłat i niespodzianek na miejscu.",
   },
   {
     title: "Kierowca w cenie",
-    desc: "W garniturze, dyskretny, zna trasę przed wyjazdem.",
+    desc: "Rozumie rangę tego dnia i jest do niego perfekcyjnie przygotowany — dyskretny, w garniturze, ze znajomością trasy.",
   },
   {
-    title: "Auto przygotowane przed trasą",
-    desc: "Mycie i detailing, w środku woda i chusteczki.",
+    title: "Auto w nienagannym stanie",
+    desc: "Zawsze umyte, wypielęgnowane i lśniące. W środku czekają na Was woda i chusteczki — w cenie.",
   },
   {
-    title: "Jedna osoba do kontaktu",
-    desc: "Od pierwszej wiadomości do dnia ślubu.",
-  },
-  {
-    title: "Dyskrecja",
-    desc: "Bez zdjęć i nagrań z Waszego dnia.",
+    title: "Jedna, bliska osoba do kontaktu",
+    desc: "Kontaktuje się z Wami bezpośrednio kierowca, który będzie z Wami w dniu wesela — nie anonimowa infolinia.",
   },
 ];
 

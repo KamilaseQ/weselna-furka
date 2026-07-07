@@ -52,6 +52,9 @@ export interface Addon {
   /** decoration visual hook used by the CarVisualizer */
   visual?: "flowers" | "ribbons" | "carpet" | "none";
   defaultOn?: boolean;
+  /** priced individually after the request — shows "wycena indywidualna",
+   *  never added to the running total */
+  quote?: boolean;
 }
 
 export interface PackageTier {

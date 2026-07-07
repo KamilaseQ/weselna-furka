@@ -81,7 +81,7 @@ export function DateField({
         <div
           role="dialog"
           aria-label="Kalendarz"
-          className={`absolute top-[calc(100%+8px)] z-40 w-[320px] max-w-[calc(100vw-2.5rem)] animate-popIn rounded-2xl border border-ink/8 bg-white p-4 shadow-float ${
+          className={`absolute top-[calc(100%+8px)] z-[60] w-[320px] max-w-[calc(100vw-2.5rem)] animate-popIn rounded-2xl border border-ink/8 bg-white p-4 shadow-float ${
             align === "right" ? "right-0" : "left-0"
           }`}
         >

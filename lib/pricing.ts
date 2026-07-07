@@ -23,8 +23,8 @@ export interface PriceBreakdown {
   lines: { label: string; value: number }[];
 }
 
-const KM_RATE = 4; // zł per km over the included distance
-const INCLUDED_KM = 40;
+export const KM_RATE = 2; // zł per km over the included distance
+export const INCLUDED_KM = 50;
 
 export function calculatePrice(input: PriceInput): PriceBreakdown {
   const car = cars.find((c) => c.slug === input.carSlug) ?? cars[0];
@@ -44,7 +44,7 @@ export function calculatePrice(input: PriceInput): PriceBreakdown {
   let addonsTotal = 0;
   for (const id of input.addonIds) {
     const a = allAddons.find((x) => x.id === id);
-    if (a) {
+    if (a && !a.quote) {
       addonsTotal += a.price;
       lines.push({ label: a.name, value: a.price });
     }

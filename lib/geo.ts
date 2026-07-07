@@ -64,6 +64,21 @@ export async function reverseGeocode(lat: number, lng: number): Promise<string |
   }
 }
 
+/** Warsaw city centre — origin for the standard-service radius */
+export const WARSAW_CENTER: LatLng = { lat: 52.2319, lng: 21.0067 };
+/** standard configurator serves points within this radius (km) */
+export const SERVICE_RADIUS_KM = 100;
+
+/** straight-line distance from Warsaw centre, km */
+export function kmFromWarsaw(lat: number, lng: number): number {
+  return haversineKm(WARSAW_CENTER, { lat, lng });
+}
+
+/** true when the point lies outside the standard 100 km service radius */
+export function isOutsideRadius(lat: number, lng: number): boolean {
+  return kmFromWarsaw(lat, lng) > SERVICE_RADIUS_KM;
+}
+
 function haversineKm(a: LatLng, b: LatLng): number {
   const R = 6371;
   const dLat = ((b.lat - a.lat) * Math.PI) / 180;

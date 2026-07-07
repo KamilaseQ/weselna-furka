@@ -161,12 +161,21 @@
   font-family: var(--font-sans);
   cursor: crosshair;
 }
-/* soften the tiles towards the site's warm palette */
+/* warm tint but with noticeably higher contrast so streets read clearly */
 .leaflet-tile-pane {
-  filter: saturate(0.85) sepia(0.06);
+  filter: saturate(0.95) contrast(1.12) brightness(0.98) sepia(0.05);
 }
+/* draggable pins get a generous touch target and a grab cursor */
 .route-pin {
   position: relative;
+  cursor: grab;
+  touch-action: none;
+}
+.leaflet-marker-draggable {
+  cursor: grab;
+}
+.leaflet-marker-draggable:active {
+  cursor: grabbing;
 }
 .route-pin-badge {
   position: absolute;
@@ -175,19 +184,20 @@
   transform: translateX(-50%);
   display: grid;
   place-items: center;
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   border-radius: 9999px;
   background: #6e1e2c;
   color: #fbfaf7;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
-  box-shadow: 0 2px 6px rgba(26, 26, 26, 0.3);
+  border: 2px solid #fbfaf7;
+  box-shadow: 0 2px 8px rgba(26, 26, 26, 0.45);
 }
 .route-pin-tail {
   position: absolute;
   left: 50%;
-  top: 24px;
+  top: 28px;
   transform: translateX(-50%);
   width: 2px;
   height: 12px;

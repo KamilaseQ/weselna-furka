@@ -3,8 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { aboutImage, carImageSets } from "@/data/images";
 import { TrustBadges } from "@/components/TrustBadges";
+import { PremiumPoints } from "@/components/PremiumPoints";
 import { SectionHeading } from "@/components/SectionHeading";
-import { ReviewsStrip } from "@/components/ReviewsStrip";
 import { CtaBand } from "@/components/CtaBand";
 import { Reveal } from "@/components/Reveal";
 import { ArrowRight } from "@/components/icons";
@@ -24,7 +24,7 @@ const steps = [
   {
     n: "02",
     title: "Potwierdzenie terminu",
-    desc: "Jedna osoba potwierdza dostępność i pozostaje z Wami w kontakcie do końca.",
+    desc: "Odzywa się do Was bezpośrednio kierowca, który będzie z Wami w dniu ślubu — i zostaje w kontakcie do końca.",
   },
   {
     n: "03",
@@ -55,8 +55,9 @@ export default function ONasPage() {
               wymiany piętnastu maili i niepewności co do ceny.
             </p>
             <p className="mt-4 max-w-md text-[17px] leading-relaxed text-ink-muted">
-              Wybieracie auto, widzicie cenę od razu, a jedna osoba prowadzi Was
-              od pierwszej wiadomości aż po przyjazd kierowcy.
+              Wybieracie auto, widzicie cenę od razu, a kontaktuje się z Wami
+              bezpośrednio kierowca, który będzie z Wami w dniu ślubu. Chcemy,
+              żebyście czuli się zaopiekowani — i mogli myśleć wyłącznie o sobie.
             </p>
             <Link href="/flota" className="btn-primary mt-7">
               Poznaj flotę
@@ -131,6 +132,20 @@ export default function ONasPage() {
         </div>
       </section>
 
+      {/* premium standard */}
+      <section className="site-container py-20">
+        <Reveal>
+          <SectionHeading
+            eyebrow="Nasz standard"
+            title="Premium widać w szczegółach."
+            subtitle="Nie idziemy na skróty — bo ten dzień zdarza się raz."
+          />
+        </Reveal>
+        <div className="mt-14">
+          <PremiumPoints />
+        </div>
+      </section>
+
       {/* why us */}
       <section className="bg-cream-50/60 py-20">
         <div className="site-container">
@@ -146,19 +161,7 @@ export default function ONasPage() {
         </div>
       </section>
 
-      {/* reviews */}
-      <section className="py-20">
-        <div className="site-container">
-          <Reveal>
-            <SectionHeading eyebrow="Opinie par" title="Co mówią pary." />
-          </Reveal>
-        </div>
-        <Reveal delay={120}>
-          <div className="mt-10">
-            <ReviewsStrip />
-          </div>
-        </Reveal>
-      </section>
+      {/* reviews — temporarily hidden */}
 
       <Reveal>
         <CtaBand />

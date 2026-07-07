@@ -116,7 +116,7 @@ export default function FlotaPage() {
                     href={`/konfigurator?car=${car.slug}`}
                     className="btn-primary"
                   >
-                    Konfiguruj od {formatPLNShort(car.basePrice)}
+                    Poproś o rezerwację — od {formatPLNShort(car.basePrice)}
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                   <Link

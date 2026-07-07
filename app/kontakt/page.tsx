@@ -17,8 +17,14 @@ const channels = [
   {
     icon: PhoneIcon,
     label: "Telefon",
-    value: "+48 555 123 456",
-    href: "tel:+48555123456",
+    value: "+48 501 747 490",
+    href: "tel:+48501747490",
+  },
+  {
+    icon: PhoneIcon,
+    label: "Telefon",
+    value: "+48 728 561 373",
+    href: "tel:+48728561373",
   },
   {
     icon: MailIcon,
@@ -48,8 +54,9 @@ export default function KontaktPage() {
             Porozmawiajmy o Waszym dniu.
           </h1>
           <p className="mt-5 max-w-md text-[17px] leading-relaxed text-ink-muted">
-            Najszybciej zarezerwujecie online — gotowy pakiet albo własną
-            konfigurację. Możecie też po prostu zadzwonić.
+            Najszybciej poprosicie o rezerwację w konfiguratorze — kilka kroków
+            i cena od razu. A jeśli wolicie usłyszeć drugą osobę, po prostu
+            zadzwońcie. Jesteśmy tu, żeby ten dzień był Waszym najspokojniejszym.
           </p>
 
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -77,8 +84,8 @@ export default function KontaktPage() {
             })}
           </div>
 
-          <Link href="/start" className="btn-primary mt-8">
-            Zarezerwujcie online
+          <Link href="/konfigurator" className="btn-primary mt-8">
+            Poproś o rezerwację
             <ArrowRight className="h-4 w-4" />
           </Link>
         </Reveal>

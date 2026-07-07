@@ -20,7 +20,6 @@ export function Footer() {
           </h4>
           <ul className="space-y-2.5 text-sm text-ink-muted">
             <li><Link href="/flota" className="transition-colors hover:text-ink">Flota</Link></li>
-            <li><Link href="/pakiety" className="transition-colors hover:text-ink">Gotowe pakiety</Link></li>
             <li><Link href="/konfigurator" className="transition-colors hover:text-ink">Konfigurator</Link></li>
             <li><Link href="/o-nas" className="transition-colors hover:text-ink">O nas</Link></li>
             <li><Link href="/kontakt" className="transition-colors hover:text-ink">Kontakt</Link></li>
@@ -33,8 +32,13 @@ export function Footer() {
           </h4>
           <ul className="space-y-3 text-sm text-ink-muted">
             <li>
-              <a href="tel:+48555123456" className="inline-flex items-center gap-2 transition-colors hover:text-ink">
-                <PhoneIcon className="h-4 w-4 text-gold" /> +48 555 123 456
+              <a href="tel:+48501747490" className="inline-flex items-center gap-2 transition-colors hover:text-ink">
+                <PhoneIcon className="h-4 w-4 text-gold" /> +48 501 747 490
+              </a>
+            </li>
+            <li>
+              <a href="tel:+48728561373" className="inline-flex items-center gap-2 transition-colors hover:text-ink">
+                <PhoneIcon className="h-4 w-4 text-gold" /> +48 728 561 373
               </a>
             </li>
             <li>
@@ -53,7 +57,7 @@ export function Footer() {
             Godziny
           </h4>
           <p className="text-sm text-ink-muted">Codziennie 9:00 – 21:00</p>
-          <Link href="/start" className="btn-primary mt-5 text-sm">
+          <Link href="/konfigurator" className="btn-primary mt-5 text-sm">
             Poproś o rezerwację
           </Link>
         </div>

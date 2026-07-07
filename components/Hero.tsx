@@ -6,15 +6,15 @@ import { useRouter } from "next/navigation";
 import { visibleCars } from "@/data/cars";
 import { getCarImages } from "@/data/images";
 import { DateField } from "./DateField";
-import { nextSeasonSaturday } from "./Calendar";
+import { todayISO } from "./Calendar";
 import { ArrowRight } from "./icons";
 
 const ROTATE_MS = 6000;
 
 const STEPS = [
-  "Wybierzcie datę",
+  "Wybierzcie datę i trasę",
   "Zobaczcie dostępność i cenę",
-  "Zarezerwujcie online",
+  "Poproście o rezerwację",
 ];
 
 /**
@@ -25,7 +25,7 @@ const STEPS = [
 export function Hero() {
   const router = useRouter();
   const [index, setIndex] = useState(0);
-  const [date, setDate] = useState(nextSeasonSaturday);
+  const [date, setDate] = useState(todayISO);
   const [calOpen, setCalOpen] = useState(false);
   const [pinned, setPinned] = useState(false);
 
@@ -125,7 +125,7 @@ export function Hero() {
               onOpenChange={setCalOpen}
             />
             <button onClick={goNext} className="btn-primary mt-4 w-full">
-              Dalej
+              Poproś o rezerwację
               <ArrowRight className="h-4 w-4" />
             </button>
             <div className="mt-5 flex items-center gap-2 border-t border-ink/8 pt-4 text-sm">

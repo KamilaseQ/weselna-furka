@@ -22,7 +22,7 @@ export function CtaBand({
       <em className="italic text-gold-soft">na Waszą datę.</em>
     </>
   ),
-  subtitle = "Gotowy pakiet albo własna konfiguracja — w obu cena znana od razu.",
+  subtitle = "Wybierzcie datę, trasę i auto — cena znana od razu, a resztą zajmujemy się my.",
 }: CtaBandProps) {
   return (
     <section className="site-container">
@@ -53,14 +53,8 @@ export function CtaBand({
           <p className="mx-auto mt-5 max-w-xl text-cream-200/75">{subtitle}</p>
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link href="/konfigurator" className="btn-light w-full sm:w-auto">
-              Otwórz konfigurator
+              Poproś o rezerwację
               <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              href="/pakiety"
-              className="btn w-full border border-cream-200/30 text-cream-50 hover:bg-white/10 sm:w-auto"
-            >
-              Zobacz pakiety
             </Link>
           </div>
           <p className="mt-7 text-xs text-cream-200/55">

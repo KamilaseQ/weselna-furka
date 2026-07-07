@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { Hero } from "@/components/Hero";
 import { SectionHeading } from "@/components/SectionHeading";
-import { PathChoice } from "@/components/PathChoice";
 import { TrustBadges } from "@/components/TrustBadges";
-import { ReviewsStrip } from "@/components/ReviewsStrip";
+import { PremiumPoints } from "@/components/PremiumPoints";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { FleetShowcase } from "@/components/FleetShowcase";
 import { CtaBand } from "@/components/CtaBand";
@@ -13,25 +12,6 @@ export default function HomePage() {
   return (
     <>
       <Hero />
-
-      {/* Two paths */}
-      <section className="site-container pt-24">
-        <Reveal>
-          <SectionHeading
-            eyebrow="Rezerwacja"
-            title={
-              <>
-                Gotowy pakiet albo <em>własna konfiguracja.</em>
-              </>
-            }
-          />
-        </Reveal>
-        <Reveal delay={120}>
-          <div className="mt-12">
-            <PathChoice />
-          </div>
-        </Reveal>
-      </section>
 
       {/* Fleet — editorial spreads */}
       <section className="site-container pt-24">
@@ -47,6 +27,20 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Premium standard — what sets us apart */}
+      <section className="site-container pt-24">
+        <Reveal>
+          <SectionHeading
+            eyebrow="Nasz standard"
+            title="Dopracowane w każdym calu."
+            subtitle="Detale, które sprawiają, że dzień jest naprawdę wyjątkowy — i o które nie musicie się martwić."
+          />
+        </Reveal>
+        <div className="mt-14">
+          <PremiumPoints />
+        </div>
+      </section>
+
       {/* Promises */}
       <section className="site-container pt-24">
         <Reveal>
@@ -57,19 +51,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Reviews */}
-      <section className="pt-24">
-        <div className="site-container">
-          <Reveal>
-            <SectionHeading eyebrow="Opinie par" title="Co mówią pary." />
-          </Reveal>
-        </div>
-        <Reveal delay={120}>
-          <div className="mt-12">
-            <ReviewsStrip />
-          </div>
-        </Reveal>
-      </section>
+      {/* Reviews — temporarily hidden */}
 
       {/* CTA band */}
       <section className="pt-24">
@@ -98,16 +80,20 @@ export default function HomePage() {
             <h2 className="text-3xl text-ink sm:text-4xl">
               Macie pytanie? Jesteśmy pod telefonem.
             </h2>
-            <a
-              href="tel:+48555123456"
-              className="mt-6 inline-block font-serif text-4xl text-ink transition-colors hover:text-wine sm:text-5xl"
-            >
-              +48 555 123 456
-            </a>
-            <p className="mt-4 text-sm text-ink-muted">
-              Codziennie 9:00–21:00 · jedna osoba prowadzi Was od pierwszej
-              wiadomości aż po dzień ślubu.
-            </p>
+            <div className="mt-6 flex flex-col items-center justify-center gap-2 sm:flex-row sm:gap-8">
+              <a
+                href="tel:+48501747490"
+                className="inline-block font-serif text-3xl text-ink transition-colors hover:text-wine sm:text-4xl"
+              >
+                +48 501 747 490
+              </a>
+              <a
+                href="tel:+48728561373"
+                className="inline-block font-serif text-3xl text-ink transition-colors hover:text-wine sm:text-4xl"
+              >
+                +48 728 561 373
+              </a>
+            </div>
             <Link
               href="/kontakt"
               className="mt-6 inline-block text-sm font-medium text-wine underline underline-offset-4 transition-colors hover:text-wine-deep"

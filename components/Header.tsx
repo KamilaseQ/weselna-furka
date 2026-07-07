@@ -9,7 +9,6 @@ import { MenuIcon, CloseIcon } from "./icons";
 const nav = [
   { href: "/o-nas", label: "O nas" },
   { href: "/flota", label: "Flota" },
-  { href: "/pakiety", label: "Gotowe pakiety" },
   { href: "/konfigurator", label: "Konfigurator" },
   { href: "/kontakt", label: "Kontakt" },
 ];
@@ -67,8 +66,8 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link href="/start" className="hidden btn-primary sm:inline-flex">
-            Zarezerwuj
+          <Link href="/konfigurator" className="hidden btn-primary sm:inline-flex">
+            Poproś o rezerwację
           </Link>
           <button
             type="button"
@@ -98,8 +97,8 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
-            <Link href="/start" className="btn-primary mt-4 w-full">
-              Zarezerwuj
+            <Link href="/konfigurator" className="btn-primary mt-4 w-full">
+              Poproś o rezerwację
             </Link>
           </nav>
         </div>
