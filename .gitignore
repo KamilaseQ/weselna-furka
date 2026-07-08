@@ -5,4 +5,5 @@
 *.tsbuildinfo
 next-env.d.ts
 .env*.local
+.admin-password.local.txt
 .DS_Store

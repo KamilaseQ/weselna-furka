@@ -53,6 +53,7 @@ interface CalendarProps {
   onChange: (iso: string) => void;
   /** earliest selectable date, ISO; defaults to today */
   min?: string;
+  disabledDates?: string[];
   className?: string;
 }
 
@@ -60,10 +61,17 @@ interface CalendarProps {
  * Elegant custom month calendar — serif month title, pill days,
  * Monday-first Polish grid. Replaces the native date input everywhere.
  */
-export function Calendar({ value, onChange, min, className = "" }: CalendarProps) {
+export function Calendar({
+  value,
+  onChange,
+  min,
+  disabledDates = [],
+  className = "",
+}: CalendarProps) {
   const today = startOfDay(new Date());
   const minDate = parseISODate(min) ?? today;
   const selected = parseISODate(value);
+  const disabledSet = useMemo(() => new Set(disabledDates), [disabledDates]);
 
   const [view, setView] = useState<Date>(() => {
     const base = selected ?? minDate;
@@ -149,20 +157,26 @@ export function Calendar({ value, onChange, min, className = "" }: CalendarProps
           const iso = toISODate(d);
           const isSelected = selected ? iso === toISODate(selected) : false;
           const isToday = iso === toISODate(today);
-          const disabled = d < minDate;
+          const isBlocked = disabledSet.has(iso);
+          const disabled = d < minDate || isBlocked;
           return (
             <button
               key={iso}
               type="button"
               disabled={disabled}
               onClick={() => onChange(iso)}
-              aria-label={formatPolishDate(iso)}
+              aria-label={`${formatPolishDate(iso)}${
+                isBlocked ? " - termin zajety" : ""
+              }`}
               aria-pressed={isSelected}
+              title={isBlocked ? "Termin zajety" : undefined}
               className={`relative mx-auto grid aspect-square w-full max-w-[2.5rem] place-items-center rounded-full text-sm transition-all duration-200 ${
                 isSelected
                   ? "bg-wine font-medium text-cream-50 shadow-card"
                   : disabled
-                    ? "cursor-default text-ink-faint/50"
+                    ? `cursor-default text-ink-faint/50 ${
+                        isBlocked ? "line-through decoration-wine/60" : ""
+                      }`
                     : "text-ink-soft hover:bg-ink/5 hover:text-ink"
               }`}
             >

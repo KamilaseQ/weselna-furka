@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -11,6 +11,7 @@ import { packageImages, getCarImages } from "@/data/images";
 import type { GeneratedImage } from "@/data/images";
 import { DateField } from "./DateField";
 import { formatPolishDate } from "./Calendar";
+import { CONTACT_PHONE, CONTACT_PHONE_HREF } from "@/lib/contact";
 import { formatPLNShort } from "@/lib/format";
 import {
   CheckIcon,
@@ -20,13 +21,11 @@ import {
   ShareIcon,
 } from "./icons";
 
-const CONTACT_PHONE = "+48 501 747 490";
-const CONTACT_PHONE_HREF = "tel:+48501747490";
-
 interface ResolvedConfig {
   kind: "config" | "package";
   title: string;
   carSlug?: string;
+  packageId?: string;
   date: string;
   /** ordered route stops from the configurator */
   stops: string[];
@@ -51,6 +50,7 @@ function useResolved(): ResolvedConfig {
     return {
       kind: "package",
       title: `Pakiet ${pkg.name}`,
+      packageId: pkg.id,
       date: p.get("date") || "",
       stops: [],
       addonNames: pkg.summary,
@@ -94,6 +94,7 @@ export function ReservationForm() {
     date: cfg.date || "",
     notes: "",
     consent: false,
+    website: "",
   });
   const [stage, setStage] = useState<Stage>("form");
   const [sending, setSending] = useState(false);
@@ -103,8 +104,45 @@ export function ReservationForm() {
   const set = (k: keyof typeof form, v: string | boolean) =>
     setForm((f) => ({ ...f, [k]: v }));
 
+  const [unavailableDates, setUnavailableDates] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!cfg.carSlug || !form.date) {
+      setUnavailableDates([]);
+      return;
+    }
+
+    const controller = new AbortController();
+    const params = new URLSearchParams({
+      from: form.date,
+      to: form.date,
+      carSlug: cfg.carSlug,
+    });
+
+    fetch(`/api/availability?${params.toString()}`, {
+      signal: controller.signal,
+    })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) =>
+        setUnavailableDates(Array.isArray(data?.dates) ? data.dates : [])
+      )
+      .catch(() => {
+        if (!controller.signal.aborted) setUnavailableDates([]);
+      });
+
+    return () => controller.abort();
+  }, [cfg.carSlug, form.date]);
+
+  const dateUnavailable = Boolean(
+    form.date && unavailableDates.includes(form.date)
+  );
   const valid =
-    form.name.trim() && form.phone.trim() && form.email.trim() && form.consent;
+    form.name.trim() &&
+    form.phone.trim() &&
+    form.email.trim() &&
+    form.date.trim() &&
+    form.consent &&
+    !dateUnavailable;
 
   /** copy the full request link so a partner can review the same configuration */
   const shareLink = async () => {
@@ -132,6 +170,8 @@ export function ReservationForm() {
           addons: cfg.addonNames,
           total: cfg.total,
           custom: cfg.individual,
+          carSlug: cfg.carSlug,
+          packageId: cfg.packageId,
         }),
       });
       if (!res.ok) throw new Error("send failed");
@@ -250,11 +290,17 @@ export function ReservationForm() {
                   </div>
                   <div className="grid gap-6 sm:grid-cols-2">
                     <div>
-                      <label className="field-label">Data ślubu</label>
+                      <label className="field-label">Data ślubu *</label>
                       <DateField
                         value={form.date}
                         onChange={(iso) => set("date", iso)}
+                        disabledDates={unavailableDates}
                       />
+                      {dateUnavailable && (
+                        <p className="mt-2 text-sm text-wine">
+                          Ten termin jest już zablokowany dla wybranego auta.
+                        </p>
+                      )}
                     </div>
                     <div>
                       <label className="field-label">Adres odbioru</label>
@@ -300,6 +346,15 @@ export function ReservationForm() {
 
                   <label className="flex items-start gap-3 text-sm text-ink-soft">
                     <input
+                      type="text"
+                      value={form.website}
+                      onChange={(e) => set("website", e.target.value)}
+                      className="hidden"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                    />
+                    <input
                       type="checkbox"
                       checked={form.consent}
                       onChange={(e) => set("consent", e.target.checked)}
@@ -307,11 +362,19 @@ export function ReservationForm() {
                     />
                     <span>
                       Akceptuję{" "}
-                      <span className="underline underline-offset-2">Regulamin</span>{" "}
-                      i{" "}
-                      <span className="underline underline-offset-2">
-                        Politykę prywatności
-                      </span>
+                      <Link
+                        href="/zasady-rezerwacji"
+                        className="underline underline-offset-2"
+                      >
+                        zasady zgłoszenia
+                      </Link>{" "}
+                      i zapoznałem/am się z{" "}
+                      <Link
+                        href="/polityka-prywatnosci"
+                        className="underline underline-offset-2"
+                      >
+                        polityką prywatności
+                      </Link>
                       .
                     </span>
                   </label>

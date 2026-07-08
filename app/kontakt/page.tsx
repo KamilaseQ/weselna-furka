@@ -6,6 +6,14 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { Reveal } from "@/components/Reveal";
 import { PhoneIcon, MailIcon, PinIcon, ClockIcon, ArrowRight } from "@/components/icons";
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE,
+  CONTACT_PHONE_HREF,
+  SECONDARY_PHONE,
+  SECONDARY_PHONE_HREF,
+  SERVICE_AREA,
+} from "@/lib/contact";
 
 export const metadata: Metadata = {
   title: "Kontakt — Weselna Furka",
@@ -17,25 +25,25 @@ const channels = [
   {
     icon: PhoneIcon,
     label: "Telefon",
-    value: "+48 501 747 490",
-    href: "tel:+48501747490",
+    value: CONTACT_PHONE,
+    href: CONTACT_PHONE_HREF,
   },
   {
     icon: PhoneIcon,
     label: "Telefon",
-    value: "+48 728 561 373",
-    href: "tel:+48728561373",
+    value: SECONDARY_PHONE,
+    href: SECONDARY_PHONE_HREF,
   },
   {
     icon: MailIcon,
     label: "E-mail",
-    value: "kontakt@weselnafurka.pl",
-    href: "mailto:kontakt@weselnafurka.pl",
+    value: CONTACT_EMAIL,
+    href: `mailto:${CONTACT_EMAIL}`,
   },
   {
     icon: PinIcon,
     label: "Obszar",
-    value: "Warszawa i okolice",
+    value: SERVICE_AREA,
   },
   {
     icon: ClockIcon,

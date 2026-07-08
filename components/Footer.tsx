@@ -1,6 +1,14 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
 import { PhoneIcon, MailIcon, PinIcon } from "./icons";
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE,
+  CONTACT_PHONE_HREF,
+  SECONDARY_PHONE,
+  SECONDARY_PHONE_HREF,
+  SERVICE_AREA,
+} from "@/lib/contact";
 
 export function Footer() {
   return (
@@ -32,22 +40,22 @@ export function Footer() {
           </h4>
           <ul className="space-y-3 text-sm text-ink-muted">
             <li>
-              <a href="tel:+48501747490" className="inline-flex items-center gap-2 transition-colors hover:text-ink">
-                <PhoneIcon className="h-4 w-4 text-gold" /> +48 501 747 490
+              <a href={CONTACT_PHONE_HREF} className="inline-flex items-center gap-2 transition-colors hover:text-ink">
+                <PhoneIcon className="h-4 w-4 text-gold" /> {CONTACT_PHONE}
               </a>
             </li>
             <li>
-              <a href="tel:+48728561373" className="inline-flex items-center gap-2 transition-colors hover:text-ink">
-                <PhoneIcon className="h-4 w-4 text-gold" /> +48 728 561 373
+              <a href={SECONDARY_PHONE_HREF} className="inline-flex items-center gap-2 transition-colors hover:text-ink">
+                <PhoneIcon className="h-4 w-4 text-gold" /> {SECONDARY_PHONE}
               </a>
             </li>
             <li>
-              <a href="mailto:weselnafurka@gmail.com" className="inline-flex items-center gap-2 transition-colors hover:text-ink">
-                <MailIcon className="h-4 w-4 text-gold" /> kontakt@weselnafurka.pl
+              <a href={`mailto:${CONTACT_EMAIL}`} className="inline-flex items-center gap-2 transition-colors hover:text-ink">
+                <MailIcon className="h-4 w-4 text-gold" /> {CONTACT_EMAIL}
               </a>
             </li>
             <li className="inline-flex items-center gap-2">
-              <PinIcon className="h-4 w-4 text-gold" /> Warszawa i okolice
+              <PinIcon className="h-4 w-4 text-gold" /> {SERVICE_AREA}
             </li>
           </ul>
         </div>
@@ -67,8 +75,12 @@ export function Footer() {
         <div className="site-container flex flex-col items-center justify-between gap-2 py-6 text-xs text-ink-faint sm:flex-row">
           <p>© {new Date().getFullYear()} Weselna Furka. Wszystkie prawa zastrzeżone.</p>
           <p className="flex gap-4">
-            <span className="hover:text-ink-muted">Regulamin</span>
-            <span className="hover:text-ink-muted">Polityka prywatności</span>
+            <Link href="/zasady-rezerwacji" className="hover:text-ink-muted">
+              Zasady rezerwacji
+            </Link>
+            <Link href="/polityka-prywatnosci" className="hover:text-ink-muted">
+              Polityka prywatności
+            </Link>
           </p>
         </div>
       </div>

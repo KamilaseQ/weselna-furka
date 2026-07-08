@@ -8,7 +8,7 @@ import { addons } from "@/data/addons";
 import { getCarImages } from "@/data/images";
 import { calculatePrice, INCLUDED_KM, KM_RATE } from "@/lib/pricing";
 import { formatPLNShort } from "@/lib/format";
-import { Calendar, formatPolishDate, todayISO } from "./Calendar";
+import { Calendar, formatPolishDate, todayISO, toISODate } from "./Calendar";
 import { RouteMap, type MapStop } from "./RouteMap";
 import {
   searchAddress,
@@ -105,6 +105,7 @@ export function Configurator() {
   });
 
   const [copied, setCopied] = useState(false);
+  const [unavailableDates, setUnavailableDates] = useState<string[]>([]);
 
   /* driving route follows the pins — keyed by coordinates so renaming
      a stop doesn't refetch */
@@ -147,6 +148,31 @@ export function Configurator() {
     }, 450);
     return () => clearTimeout(t);
   }, [query]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const from = todayISO();
+    const toDate = new Date();
+    toDate.setMonth(toDate.getMonth() + 18);
+    const params = new URLSearchParams({
+      from,
+      to: toISODate(toDate),
+      carSlug,
+    });
+
+    fetch(`/api/availability?${params.toString()}`, {
+      signal: controller.signal,
+    })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) =>
+        setUnavailableDates(Array.isArray(data?.dates) ? data.dates : [])
+      )
+      .catch(() => {
+        if (!controller.signal.aborted) setUnavailableDates([]);
+      });
+
+    return () => controller.abort();
+  }, [carSlug]);
 
   const go = (next: number) => {
     setDir(next > step ? "fwd" : "back");
@@ -221,8 +247,11 @@ export function Configurator() {
     (id) => addons.find((a) => a.id === id)?.quote
   );
   const individualQuote = individualRoute || hasQuoteAddon;
+  const dateUnavailable = unavailableDates.includes(date);
 
   const goCheckout = () => {
+    if (dateUnavailable) return;
+
     const q = new URLSearchParams({
       car: carSlug,
       date,
@@ -358,10 +387,19 @@ export function Configurator() {
             width="max-w-lg"
           >
             <div className="surface-card p-5 sm:p-7">
-              <Calendar value={date} onChange={setDate} />
+              <Calendar
+                value={date}
+                onChange={setDate}
+                disabledDates={unavailableDates}
+              />
               <p className="mt-5 border-t border-ink/8 pt-4 text-center font-serif text-2xl text-ink">
                 {formatPolishDate(date)}
               </p>
+              {dateUnavailable && (
+                <p className="mt-3 text-center text-sm text-wine">
+                  Ten termin jest już zablokowany dla wybranego auta.
+                </p>
+              )}
             </div>
           </StepShell>
         )}
@@ -762,13 +800,21 @@ export function Configurator() {
                   <ShareIcon className="h-4 w-4" />
                   {copied ? "Link skopiowany" : "Wyślij partnerowi"}
                 </button>
-                <button onClick={goCheckout} className="btn-primary">
+                <button
+                  onClick={goCheckout}
+                  disabled={dateUnavailable}
+                  className="btn-primary disabled:cursor-not-allowed disabled:opacity-40"
+                >
                   Poproś o rezerwację
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </>
             ) : (
-              <button onClick={() => go(step + 1)} className="btn-primary">
+              <button
+                onClick={() => !dateUnavailable && go(step + 1)}
+                disabled={dateUnavailable}
+                className="btn-primary disabled:cursor-not-allowed disabled:opacity-40"
+              >
                 Dalej — {STEPS[step].label.toLowerCase()}
                 <ArrowRight className="h-4 w-4" />
               </button>

@@ -5,7 +5,7 @@ import { faq } from "@/data/faq";
 import { ChevronDown } from "./icons";
 
 export function FaqAccordion() {
-  const [open, setOpen] = useState<number | null>(0);
+  const [open, setOpen] = useState<number | null>(null);
 
   return (
     <div className="mx-auto max-w-3xl divide-y divide-ink/10">

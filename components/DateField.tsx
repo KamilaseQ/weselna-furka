@@ -8,6 +8,7 @@ interface DateFieldProps {
   value?: string;
   onChange: (iso: string) => void;
   min?: string;
+  disabledDates?: string[];
   placeholder?: string;
   className?: string;
   /** fires when the calendar popover opens/closes */
@@ -23,6 +24,7 @@ export function DateField({
   value,
   onChange,
   min,
+  disabledDates,
   placeholder = "Wybierz datę",
   className = "",
   onOpenChange,
@@ -88,6 +90,7 @@ export function DateField({
           <Calendar
             value={value}
             min={min}
+            disabledDates={disabledDates}
             onChange={(iso) => {
               onChange(iso);
               setOpenNotify(false);

@@ -3,6 +3,13 @@ import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE,
+  SECONDARY_PHONE,
+  SERVICE_AREA,
+  SITE_URL,
+} from "@/lib/contact";
 
 const serif = Cormorant_Garamond({
   subsets: ["latin", "latin-ext"],
@@ -18,8 +25,6 @@ const sans = Inter({
   variable: "--font-sans",
   display: "swap",
 });
-
-const SITE_URL = "https://weselnafurka.pl";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -70,9 +75,12 @@ const jsonLd = {
   description:
     "Wynajem luksusowych samochodów z kierowcą na wesela w Warszawie i okolicach.",
   url: SITE_URL,
-  areaServed: "Warszawa i okolice (promień 100 km)",
-  email: "kontakt@weselnafurka.pl",
-  telephone: ["+48501747490", "+48728561373"],
+  areaServed: SERVICE_AREA,
+  email: CONTACT_EMAIL,
+  telephone: [
+    CONTACT_PHONE.replace(/\s/g, ""),
+    SECONDARY_PHONE.replace(/\s/g, ""),
+  ],
   address: {
     "@type": "PostalAddress",
     addressLocality: "Warszawa",

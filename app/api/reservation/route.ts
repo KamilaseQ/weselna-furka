@@ -1,44 +1,64 @@
 import { NextResponse } from "next/server";
+import { hashClientIp } from "@/lib/request";
+import { sendReservationEmails } from "@/lib/mail";
+import { reservationInputSchema } from "@/lib/reservation-schema";
+import {
+  createReservation,
+  isReservationRateLimited,
+  recordReservationAttempt,
+  updateReservationMailState,
+} from "@/lib/reservation-store";
 
-/**
- * Reservation request endpoint. Receives the completed configuration + contact
- * details and (in production) fires the confirmation e-mail to the team and the
- * couple. Wiring to a real mail provider (Resend / SMTP) is a drop-in here —
- * for now we validate the payload and acknowledge so the UI flow works
- * end-to-end.
- */
 export async function POST(request: Request) {
+  const ipHash = hashClientIp(request);
+
   try {
-    const data = await request.json();
-
-    const name = String(data?.name || "").trim();
-    const phone = String(data?.phone || "").trim();
-    const email = String(data?.email || "").trim();
-
-    if (!name || !phone || !email) {
+    if (await isReservationRateLimited(ipHash)) {
       return NextResponse.json(
-        { ok: false, error: "Brak wymaganych danych." },
+        { ok: false, error: "Zbyt wiele prob. Sprobuj ponownie pozniej." },
+        { status: 429 }
+      );
+    }
+
+    const data = await request.json();
+    const parsed = reservationInputSchema.safeParse(data);
+
+    if (!parsed.success) {
+      await recordReservationAttempt(ipHash, false);
+      return NextResponse.json(
+        { ok: false, error: "Sprawdzcie wymagane dane formularza." },
         { status: 400 }
       );
     }
 
-    // TODO: send confirmation e-mail via mail provider using `data`.
-    // Logged server-side until the provider is connected.
-    console.info("[reservation] new request", {
-      name,
-      email,
-      phone,
-      title: data?.title,
-      date: data?.date,
-      total: data?.total,
-      custom: data?.custom,
-    });
+    const reservation = await createReservation(parsed.data);
+    await recordReservationAttempt(ipHash, true);
 
-    return NextResponse.json({ ok: true });
-  } catch {
+    try {
+      await sendReservationEmails(reservation, parsed.data);
+      await updateReservationMailState(reservation.id, "sent", "sent");
+    } catch (error) {
+      await updateReservationMailState(
+        reservation.id,
+        "failed",
+        "failed",
+        error instanceof Error ? error.message : "Unknown mail error"
+      );
+      console.error("[reservation] mail failed", error);
+    }
+
+    return NextResponse.json({ ok: true, id: reservation.id });
+  } catch (error) {
+    console.error("[reservation] failed", error);
+    try {
+      await recordReservationAttempt(ipHash, false);
+    } catch {
+      /* ignore secondary failure */
+    }
+
     return NextResponse.json(
       { ok: false, error: "Nie udało się przetworzyć zgłoszenia." },
-      { status: 400 }
+      { status: 500 }
     );
   }
 }
