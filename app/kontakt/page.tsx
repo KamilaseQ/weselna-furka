@@ -77,11 +77,11 @@ export default function KontaktPage() {
         <Reveal>
           <p className="eyebrow">Kontakt</p>
           <h1 className="mt-3 text-5xl leading-[1.05] text-ink sm:text-6xl">
-            Kontakt w sprawie auta do ślubu.
+            Kontakt: auto do ślubu Warszawa.
           </h1>
           <p className="mt-5 max-w-md text-[17px] leading-relaxed text-ink-muted">
-            Najszybciej poprosicie o rezerwację w konfiguratorze — kilka kroków
-            i cena od razu. A jeśli wolicie usłyszeć drugą osobę, po prostu
+            Najszybciej poprosicie o rezerwację w konfiguratorze: data, trasa,
+            auto i dodatki w jednym miejscu. A jeśli wolicie usłyszeć drugą osobę, po prostu
             zadzwońcie. Jesteśmy tu, żeby ten dzień był Waszym najspokojniejszym.
           </p>
 

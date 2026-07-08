@@ -1,20 +1,18 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Hero } from "@/components/Hero";
 import { SectionHeading } from "@/components/SectionHeading";
-import { TrustBadges } from "@/components/TrustBadges";
-import { PremiumPoints } from "@/components/PremiumPoints";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { FleetShowcase } from "@/components/FleetShowcase";
 import { CtaBand } from "@/components/CtaBand";
 import { Reveal } from "@/components/Reveal";
 import { faq } from "@/data/faq";
 import { buildPageMetadata, breadcrumbJsonLd, faqJsonLd } from "@/lib/seo";
+import { CalendarIcon, CarIcon, RouteIcon } from "@/components/icons";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Auto do ślubu Warszawa",
   description:
-    "Luksusowe auto do ślubu w Warszawie z kierowcą. Mercedes S-Klasa i Maserati, cena od razu w konfiguratorze, bez ukrytych kosztów.",
+    "Luksusowe auto do ślubu w Warszawie z kierowcą. Mercedes S-Klasa i Maserati, konfigurator trasy, daty i dodatków.",
   path: "/",
   keywords: [
     "auto do ślubu Warszawa",
@@ -26,6 +24,24 @@ export const metadata: Metadata = buildPageMetadata({
 
 const breadcrumb = breadcrumbJsonLd([{ name: "Strona główna", path: "/" }]);
 const homeFaqSchema = faqJsonLd(faq);
+
+const steps = [
+  {
+    title: "Wybieracie datę",
+    text: "Od razu sprawdzacie termin dla wybranego auta.",
+    icon: CalendarIcon,
+  },
+  {
+    title: "Dodajecie trasę",
+    text: "Odbiór, ceremonia, sala i ewentualna sesja w jednym planie.",
+    icon: RouteIcon,
+  },
+  {
+    title: "Dobieracie auto",
+    text: "Mercedes S-Klasa albo Maserati Ghibli z kierowcą.",
+    icon: CarIcon,
+  },
+];
 
 export default function HomePage() {
   return (
@@ -40,94 +56,62 @@ export default function HomePage() {
       />
       <Hero />
 
-      {/* Fleet — editorial spreads */}
-      <section className="site-container pt-24">
+      <section className="site-container pt-20">
         <Reveal>
           <SectionHeading
             eyebrow="Flota"
-            title="Poznajcie auta z bliska."
-            subtitle="Każdy model przygotowujemy tak samo starannie — umyty, wydetailowany, z kierowcą w cenie."
+            title="Dwa auta. Jeden prosty wybór."
+            subtitle="Mercedes-Benz S-Klasa i Maserati Ghibli. Oba w ślubnym kolorze, z kierowcą i przygotowaniem pod uroczystość."
           />
         </Reveal>
-        <div className="mt-16">
+        <div className="mt-12">
           <FleetShowcase />
         </div>
       </section>
 
-      {/* Premium standard — what sets us apart */}
-      <section className="site-container pt-24">
+      <section className="site-container pt-20">
         <Reveal>
           <SectionHeading
-            eyebrow="Nasz standard"
-            title="Dopracowane w każdym calu."
-            subtitle="Detale, które sprawiają, że dzień jest naprawdę wyjątkowy — i o które nie musicie się martwić."
+            eyebrow="Konfigurator"
+            title="Wycena zależy od Waszej trasy."
+            subtitle="Najpierw podajecie realny plan dnia, a potem prosicie o potwierdzenie terminu."
           />
         </Reveal>
-        <div className="mt-14">
-          <PremiumPoints />
+        <div className="mt-10 grid gap-6 md:grid-cols-3">
+          {steps.map((step, index) => {
+            const Icon = step.icon;
+            return (
+              <Reveal key={step.title} delay={index * 80}>
+                <div className="border-t border-ink/10 pt-5">
+                  <Icon className="h-6 w-6 text-gold" />
+                  <h2 className="mt-4 text-2xl text-ink">{step.title}</h2>
+                  <p className="mt-2 text-sm leading-relaxed text-ink-muted">
+                    {step.text}
+                  </p>
+                </div>
+              </Reveal>
+            );
+          })}
         </div>
       </section>
 
-      {/* Promises */}
-      <section className="site-container pt-24">
+      <section className="site-container pt-20">
         <Reveal>
-          <SectionHeading eyebrow="Nasze obietnice" title="Co gwarantujemy." />
-        </Reveal>
-        <div className="mt-12">
-          <TrustBadges />
-        </div>
-      </section>
-
-      {/* Reviews — temporarily hidden */}
-
-      {/* CTA band */}
-      <section className="pt-24">
-        <Reveal>
-          <CtaBand />
-        </Reveal>
-      </section>
-
-      {/* FAQ */}
-      <section className="site-container pt-24">
-        <Reveal>
-          <SectionHeading eyebrow="Pytania" title="Dobrze wiedzieć przed rezerwacją." />
+          <SectionHeading
+            eyebrow="Pytania"
+            title="Najważniejsze przed rezerwacją."
+          />
         </Reveal>
         <Reveal delay={120}>
-          <div className="mt-12">
+          <div className="mt-10">
             <FaqAccordion />
           </div>
         </Reveal>
       </section>
 
-      {/* Contact teaser — typographic, no box */}
-      <section className="site-container pt-24">
+      <section className="pt-20">
         <Reveal>
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="eyebrow-rules mb-6">Kontakt</p>
-            <h2 className="text-3xl text-ink sm:text-4xl">
-              Macie pytanie? Jesteśmy pod telefonem.
-            </h2>
-            <div className="mt-6 flex flex-col items-center justify-center gap-2 sm:flex-row sm:gap-8">
-              <a
-                href="tel:+48501747490"
-                className="inline-block font-serif text-3xl text-ink transition-colors hover:text-wine sm:text-4xl"
-              >
-                +48 501 747 490
-              </a>
-              <a
-                href="tel:+48728561373"
-                className="inline-block font-serif text-3xl text-ink transition-colors hover:text-wine sm:text-4xl"
-              >
-                +48 728 561 373
-              </a>
-            </div>
-            <Link
-              href="/kontakt"
-              className="mt-6 inline-block text-sm font-medium text-wine underline underline-offset-4 transition-colors hover:text-wine-deep"
-            >
-              Inne formy kontaktu
-            </Link>
-          </div>
+          <CtaBand />
         </Reveal>
       </section>
     </>

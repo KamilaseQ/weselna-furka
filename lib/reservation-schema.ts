@@ -19,7 +19,6 @@ export const reservationInputSchema = z
     website: z.string().trim().max(0).optional().default(""),
     title: z.string().trim().min(1).max(180),
     carSlug: z.string().trim().max(80).optional(),
-    packageId: z.string().trim().max(80).optional(),
     stops: z.array(z.string().trim().max(300)).max(8).optional().default([]),
     km: z.coerce.number().int().min(0).max(2000).optional(),
     addons: z.array(z.string().trim().max(120)).max(20).optional().default([]),

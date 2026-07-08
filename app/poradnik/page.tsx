@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { poradnikLandingPages } from "@/data/seo-landings";
-import { buildPageMetadata, breadcrumbJsonLd } from "@/lib/seo";
+import { buildPageMetadata, breadcrumbJsonLd, itemListJsonLd } from "@/lib/seo";
 import { SectionHeading } from "@/components/SectionHeading";
+import { SeoLinkCluster } from "@/components/SeoLinkCluster";
 import { ArrowRight } from "@/components/icons";
 
 export const metadata = buildPageMetadata({
-  title: "Poradnik auta do ślubu",
+  title: "Poradnik auta do ślubu Warszawa",
   description:
     "Praktyczny poradnik dla par: wybór samochodu do ślubu, cena, kierowca, dekoracje, terminy i sesja ślubna z autem.",
   path: "/poradnik",
@@ -21,6 +22,15 @@ const breadcrumb = breadcrumbJsonLd([
   { name: "Poradnik", path: "/poradnik" },
 ]);
 
+const poradnikItemList = itemListJsonLd(
+  "Poradniki o autach do ślubu",
+  poradnikLandingPages.map((page) => ({
+    name: page.h1,
+    path: page.path,
+    description: page.description,
+  }))
+);
+
 export default function PoradnikPage() {
   return (
     <>
@@ -28,11 +38,15 @@ export default function PoradnikPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(poradnikItemList) }}
+      />
       <section className="site-container py-16">
         <SectionHeading
           as="h1"
           eyebrow="Poradnik"
-          title="Jak wybrać auto do ślubu."
+          title="Jak wybrać auto do ślubu w Warszawie."
           subtitle="Konkretne odpowiedzi o cenie, czasie wynajmu, kierowcy, dekoracjach i wyborze modelu."
         />
 
@@ -58,6 +72,12 @@ export default function PoradnikPage() {
           ))}
         </div>
       </section>
+
+      <SeoLinkCluster
+        className="pt-8"
+        title="Po poradniku przejdźcie do ceny, modeli i trasy."
+        subtitle="Poradniki odpowiadają na pytania, a kolejne strony pomagają przejść do konkretnego auta i terminu."
+      />
     </>
   );
 }

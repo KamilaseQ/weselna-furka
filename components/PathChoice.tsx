@@ -9,24 +9,24 @@ interface PathChoiceProps {
 
 const cards = [
   {
-    href: "/cennik",
-    index: "01",
-    title: "Gotowe pakiety",
-    desc: "Trzy warianty w stałych cenach, porównane w jednej tabeli.",
-    cta: "Zobacz pakiety",
-    imageKey: "packages" as const,
-  },
-  {
     href: "/konfigurator",
-    index: "02",
-    title: "Własna konfiguracja",
-    desc: "Data, trasa, samochód i dodatki. Cena widoczna na każdym kroku.",
+    index: "01",
+    title: "Konfigurator przejazdu",
+    desc: "Data, trasa, samochód i dodatki. Wszystko w jednym miejscu.",
     cta: "Otwórz konfigurator",
     imageKey: "configurator" as const,
   },
+  {
+    href: "/flota",
+    index: "02",
+    title: "Zobacz auta",
+    desc: "Porównaj Mercedesa S-Klasę i Maserati Ghibli przed wyborem.",
+    cta: "Przejdź do floty",
+    imageKey: "fleet" as const,
+  },
 ];
 
-/** The two booking paths — large photo, short factual copy, one CTA. */
+/** Two clear entry points: configure the route or compare the fleet. */
 export function PathChoice({ className = "" }: PathChoiceProps) {
   return (
     <div className={`grid gap-6 md:grid-cols-2 ${className}`}>

@@ -11,7 +11,7 @@ import { ArrowRight } from "@/components/icons";
 import { buildPageMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "O nas",
+  title: "Weselna Furka - auto do ślubu Warszawa",
   description:
     "Poznaj Weselną Furkę: wynajem luksusowych aut do ślubu w Warszawie, kierowca w cenie, jasna rezerwacja i spokojna logistyka dnia.",
   path: "/o-nas",
@@ -27,7 +27,7 @@ const steps = [
   {
     n: "01",
     title: "Prośba o rezerwację",
-    desc: "Wybieracie auto, termin i dodatki online. Cena znana od razu, bez zobowiązań.",
+    desc: "Wybieracie auto, termin, trasę i dodatki online. Zgłoszenie wysyłacie bez zobowiązań.",
   },
   {
     n: "02",
@@ -59,7 +59,7 @@ export default function ONasPage() {
           <Reveal>
             <p className="eyebrow">O nas</p>
             <h1 className="mt-3 text-5xl leading-[1.05] text-ink sm:text-6xl">
-              Weselna Furka: auto do ślubu bez chaosu.
+              Weselna Furka: auto do ślubu w Warszawie bez chaosu.
             </h1>
             <p className="mt-5 max-w-md text-[17px] leading-relaxed text-ink-muted">
               Rezerwacja ma być prosta, a dzień ślubu spokojny. Zbudowaliśmy
@@ -67,7 +67,7 @@ export default function ONasPage() {
               wymiany piętnastu maili i niepewności co do ceny.
             </p>
             <p className="mt-4 max-w-md text-[17px] leading-relaxed text-ink-muted">
-              Wybieracie auto, widzicie cenę od razu, a kontaktuje się z Wami
+              Wybieracie auto, uzupełniacie trasę, a kontaktuje się z Wami
               bezpośrednio kierowca, który będzie z Wami w dniu ślubu. Chcemy,
               żebyście czuli się zaopiekowani — i mogli myśleć wyłącznie o sobie.
             </p>

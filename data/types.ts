@@ -57,27 +57,6 @@ export interface Addon {
   quote?: boolean;
 }
 
-export interface PackageTier {
-  id: string;
-  name: string;
-  /** one-line positioning under the tier name */
-  tagline: string;
-  priceFrom: number;
-  /** human label of the included time block */
-  duration: string;
-  highlight?: boolean;
-  badge?: string;
-  /** short bullet list reused in the reservation summary */
-  summary: string[];
-}
-
-/** one row of the /pakiety comparison table */
-export interface CompareRow {
-  label: string;
-  /** per-tier cell: true = included, false = not, string = short note */
-  values: (boolean | string)[];
-}
-
 export interface Review {
   name: string;
   car: string;

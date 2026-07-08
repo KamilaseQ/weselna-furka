@@ -88,19 +88,13 @@ export function getCarImages(slug: string): CarImageSet {
   return carImageSets[slug as keyof typeof carImageSets] ?? carImageSets["mercedes-s-klasa"];
 }
 
-export const packageImages = {
-  basic: carImageSets["mercedes-s-klasa"].gallery[2],
-  standard: carImageSets["maserati-ghibli"].cover,
-  premium: {
+export const pathChoiceImages = {
+  configurator: carImageSets["maserati-ghibli"].cover,
+  fleet: {
     src: "/images/generated/premium-two-cars-wedding.png",
     alt: "Mercedes-Benz S-Klasa i Maserati Ghibli przygotowane do ślubu",
     objectPosition: "center",
   },
-} satisfies Record<string, GeneratedImage>;
-
-export const pathChoiceImages = {
-  packages: packageImages.premium,
-  configurator: carImageSets["maserati-ghibli"].cover,
 } satisfies Record<string, GeneratedImage>;
 
 export const aboutImage: GeneratedImage = {

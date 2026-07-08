@@ -9,7 +9,6 @@ import { MenuIcon, CloseIcon } from "./icons";
 const nav = [
   { href: "/o-nas", label: "O nas" },
   { href: "/flota", label: "Flota" },
-  { href: "/cennik", label: "Cennik" },
   { href: "/konfigurator", label: "Konfigurator" },
   { href: "/kontakt", label: "Kontakt" },
 ];

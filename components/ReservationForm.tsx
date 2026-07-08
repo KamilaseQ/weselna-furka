@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { cars, visibleCars } from "@/data/cars";
+import { visibleCars } from "@/data/cars";
 import { addons } from "@/data/addons";
-import { packageTiers } from "@/data/packages";
-import { packageImages, getCarImages } from "@/data/images";
+import { getCarImages } from "@/data/images";
 import type { GeneratedImage } from "@/data/images";
 import { DateField } from "./DateField";
 import { formatPolishDate } from "./Calendar";
@@ -22,10 +21,8 @@ import {
 } from "./icons";
 
 interface ResolvedConfig {
-  kind: "config" | "package";
   title: string;
   carSlug?: string;
-  packageId?: string;
   date: string;
   /** ordered route stops from the configurator */
   stops: string[];
@@ -41,32 +38,11 @@ interface ResolvedConfig {
 function useResolved(): ResolvedConfig {
   const p = useSearchParams();
 
-  const packageId = p.get("package");
-  if (packageId) {
-    const pkg = packageTiers.find((x) => x.id === packageId) ?? packageTiers[0];
-    const image =
-      packageImages[pkg.id as keyof typeof packageImages] ?? packageImages.basic;
-
-    return {
-      kind: "package",
-      title: `Pakiet ${pkg.name}`,
-      packageId: pkg.id,
-      date: p.get("date") || "",
-      stops: [],
-      addonNames: pkg.summary,
-      total: pkg.priceFrom,
-      priceLabel: "od",
-      individual: false,
-      image,
-    };
-  }
-
-  const car = cars.find((c) => c.slug === p.get("car")) ?? visibleCars[0];
+  const car = visibleCars.find((c) => c.slug === p.get("car")) ?? visibleCars[0];
   const addonIds = (p.get("addons") || "").split(",").filter(Boolean);
   const individual = p.get("custom") === "1";
 
   return {
-    kind: "config",
     title: car.name,
     carSlug: car.slug,
     date: p.get("date") || "",
@@ -171,7 +147,6 @@ export function ReservationForm() {
           total: cfg.total,
           custom: cfg.individual,
           carSlug: cfg.carSlug,
-          packageId: cfg.packageId,
         }),
       });
       if (!res.ok) throw new Error("send failed");
@@ -466,11 +441,9 @@ export function ReservationForm() {
 
               <div className="p-8">
                 <h2 className="font-serif text-3xl text-ink">{cfg.title}</h2>
-                {cfg.kind === "config" && (
-                  <p className="mt-1 text-sm text-ink-muted">
-                    Biała perła · kierowca w cenie
-                  </p>
-                )}
+                <p className="mt-1 text-sm text-ink-muted">
+                  Biała perła · kierowca w cenie
+                </p>
 
                 <dl className="mt-7 space-y-6">
                   {form.date && (
@@ -502,9 +475,7 @@ export function ReservationForm() {
                     </SummaryBlock>
                   )}
                   {cfg.addonNames.length > 0 && (
-                    <SummaryBlock
-                      label={cfg.kind === "package" ? "W pakiecie" : "Dodatki"}
-                    >
+                    <SummaryBlock label="Dodatki">
                       <ul className="space-y-1.5">
                         {cfg.addonNames.map((a) => (
                           <li key={a} className="flex items-center gap-2.5">

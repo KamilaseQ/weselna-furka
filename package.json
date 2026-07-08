@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest --run",
+    "seo:check": "node scripts/seo-audit.mjs",
+    "verify": "npm run test && npm run build && npm run seo:check",
     "admin:hash": "node scripts/hash-admin-password.mjs",
     "admin:local": "node scripts/create-local-admin.mjs",
     "setup:check": "node scripts/check-setup.mjs"

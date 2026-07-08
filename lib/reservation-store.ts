@@ -12,7 +12,6 @@ export interface ReservationRecord {
   notes: string | null;
   title: string;
   car_slug: string | null;
-  package_id: string | null;
   route_stops: string[];
   addons: string[];
   km: number | null;
@@ -48,7 +47,6 @@ export async function createReservation(
       notes,
       title,
       car_slug,
-      package_id,
       route_stops,
       addons,
       km,
@@ -64,7 +62,6 @@ export async function createReservation(
       ${input.notes || null},
       ${input.title},
       ${input.carSlug || null},
-      ${input.packageId || null},
       ${JSON.stringify(input.stops)}::jsonb,
       ${JSON.stringify(input.addons)}::jsonb,
       ${input.km ?? null},

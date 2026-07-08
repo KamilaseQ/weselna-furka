@@ -321,7 +321,7 @@ function buildFaq(page: SeoLandingPageData): FaqItem[] {
 function relatedPages(page: SeoLandingPageData) {
   const candidates = [
     "auto-do-slubu-warszawa",
-    "auto-do-slubu-warszawa-cennik",
+    "wycena-auta-do-slubu-warszawa",
     "auto-do-slubu-z-kierowca-warszawa",
     "mercedes-s-klasa-do-slubu-warszawa",
     "maserati-ghibli-do-slubu-warszawa",

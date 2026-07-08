@@ -3,7 +3,7 @@ import { CONTACT_EMAIL } from "@/lib/contact";
 import { buildPageMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Polityka prywatności",
+  title: "Polityka prywatności - auto do ślubu Warszawa",
   description:
     "Minimalna informacja o przetwarzaniu danych osobowych w formularzu rezerwacji Weselna Furka.",
   path: "/polityka-prywatnosci",
@@ -24,7 +24,7 @@ export default function PrivacyPolicyPage() {
       <div className="mx-auto max-w-3xl">
         <p className="eyebrow">Prywatność</p>
         <h1 className="mt-3 font-serif text-5xl text-ink">
-          Polityka prywatności
+          Polityka prywatności Weselna Furka
         </h1>
         <div className="mt-8 space-y-6 text-[16px] leading-relaxed text-ink-muted">
           <p>
@@ -41,8 +41,8 @@ export default function PrivacyPolicyPage() {
           </p>
           <p>
             Przetwarzamy dane podane w formularzu: imię i nazwisko, adres
-            e-mail, numer telefonu, datę ślubu, trasę lub adres odbioru, wybrane
-            auto albo pakiet, dodatki oraz treść dodatkowej wiadomości.
+            e-mail, numer telefonu, datę ślubu, punkty trasy, wybrane auto,
+            dodatki oraz treść dodatkowej wiadomości.
           </p>
           <p>
             Dane wykorzystujemy w celu obsługi zgłoszenia, kontaktu z osobą

@@ -87,3 +87,21 @@ export function faqJsonLd(items: { q: string; a: string }[]) {
     })),
   };
 }
+
+export function itemListJsonLd(
+  name: string,
+  items: { name: string; path: string; description?: string }[]
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name,
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: absoluteUrl(item.path),
+      name: item.name,
+      description: item.description,
+    })),
+  };
+}

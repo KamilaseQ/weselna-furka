@@ -1,5 +1,5 @@
 import { permanentRedirect } from "next/navigation";
 
-export default function PakietyRedirectPage() {
-  permanentRedirect("/cennik");
+export default function LegacyOfferRedirectPage() {
+  permanentRedirect("/konfigurator");
 }

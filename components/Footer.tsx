@@ -34,11 +34,6 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/cennik" className="transition-colors hover:text-ink">
-                Cennik
-              </Link>
-            </li>
-            <li>
               <Link
                 href="/konfigurator"
                 className="transition-colors hover:text-ink"
@@ -65,6 +60,14 @@ export function Footer() {
                 className="transition-colors hover:text-ink"
               >
                 Poradnik
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/mapa-strony"
+                className="transition-colors hover:text-ink"
+              >
+                Mapa strony
               </Link>
             </li>
           </ul>
@@ -166,6 +169,9 @@ export function Footer() {
               className="hover:text-ink-muted"
             >
               Polityka prywatności
+            </Link>
+            <Link href="/mapa-strony" className="hover:text-ink-muted">
+              Mapa strony
             </Link>
           </p>
         </div>

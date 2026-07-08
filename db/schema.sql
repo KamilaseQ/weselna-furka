@@ -11,7 +11,6 @@ create table if not exists reservations (
   notes text,
   title text not null,
   car_slug text,
-  package_id text,
   route_stops jsonb not null default '[]'::jsonb,
   addons jsonb not null default '[]'::jsonb,
   km integer,

@@ -4,9 +4,9 @@ import { CONTACT_EMAIL } from "@/lib/contact";
 import { buildPageMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = buildPageMetadata({
-  title: "Zasady rezerwacji",
+  title: "Zasady rezerwacji auta do ślubu Warszawa",
   description:
-    "Minimalne zasady wysyłania zgłoszeń rezerwacji auta na wesele przez stronę Weselna Furka.",
+    "Zasady wysyłania zgłoszeń rezerwacji auta do ślubu w Warszawie przez stronę Weselna Furka.",
   path: "/zasady-rezerwacji",
 });
 
@@ -25,7 +25,7 @@ export default function BookingRulesPage() {
       <div className="mx-auto max-w-3xl">
         <p className="eyebrow">Zasady</p>
         <h1 className="mt-3 font-serif text-5xl text-ink">
-          Zasady rezerwacji
+          Zasady rezerwacji auta do ślubu w Warszawie
         </h1>
         <div className="mt-8 space-y-5 text-[16px] leading-relaxed text-ink-muted">
           <p>
@@ -39,7 +39,7 @@ export default function BookingRulesPage() {
             telefonicznie.
           </p>
           <p>
-            Ceny widoczne w konfiguratorze dotyczą standardowych warunków
+            Wycena widoczna w konfiguratorze dotyczy standardowych warunków
             usługi. Trasy niestandardowe, terminy specjalne oraz dodatki
             oznaczone jako wycena indywidualna wymagają osobnego potwierdzenia.
           </p>

@@ -83,7 +83,7 @@ const corePages: SeoLandingPage[] = [
     footerGroup: "Najważniejsze",
     kind: "primary",
     h1: "Auto do ślubu Warszawa - luksusowy samochód z kierowcą",
-    title: "Auto do ślubu Warszawa | Samochód premium z kierowcą",
+    title: "Auto do ślubu Warszawa",
     description:
       "Wynajem luksusowego auta do ślubu w Warszawie. Flota premium, kierowca w cenie, trasa i cena w konfiguratorze.",
     lead:
@@ -109,7 +109,7 @@ const corePages: SeoLandingPage[] = [
     footerGroup: "Najważniejsze",
     kind: "premium",
     h1: "Luksusowe auto do ślubu w Warszawie",
-    title: "Luksusowe auto do ślubu Warszawa | Segment premium",
+    title: "Luksusowe auto do ślubu Warszawa",
     description:
       "Luksusowy samochód do ślubu w Warszawie z kierowcą. Mercedes S-Klasa i Maserati Ghibli przygotowane pod elegancką oprawę dnia.",
     lead:
@@ -135,7 +135,7 @@ const corePages: SeoLandingPage[] = [
     footerGroup: "Ceny i kierowca",
     kind: "driver",
     h1: "Auto do ślubu z kierowcą w Warszawie",
-    title: "Auto do ślubu z kierowcą Warszawa | Kierowca w cenie",
+    title: "Auto z kierowcą do ślubu Warszawa",
     description:
       "Wynajem auta do ślubu z kierowcą w Warszawie. Kierowca w garniturze, bufor czasu, przejazd do ceremonii, sali i na sesję.",
     lead:
@@ -155,19 +155,19 @@ const corePages: SeoLandingPage[] = [
     ctaHref: "/konfigurator",
   },
   {
-    slug: "auto-do-slubu-warszawa-cennik",
-    path: "/auto-do-slubu-warszawa-cennik",
-    footerLabel: "Cennik aut do ślubu",
+    slug: "wycena-auta-do-slubu-warszawa",
+    path: "/wycena-auta-do-slubu-warszawa",
+    footerLabel: "Wycena auta do ślubu",
     footerGroup: "Ceny i kierowca",
     kind: "price",
-    h1: "Auto do ślubu Warszawa - cennik wynajmu",
-    title: "Auto do ślubu Warszawa cennik | Mercedes i Maserati",
+    h1: "Wycena auta do ślubu Warszawa - konfigurator przejazdu",
+    title: "Wycena auta do ślubu Warszawa",
     description:
-      "Cennik wynajmu auta do ślubu w Warszawie. Sprawdź, od czego zależy cena Mercedesa S-Klasy lub Maserati Ghibli z kierowcą.",
+      "Wycena auta do ślubu w Warszawie przez konfigurator. Podaj model, datę, trasę i dodatki, a koszt oprzemy na realnym planie przejazdu.",
     lead:
-      "Cena auta do ślubu zależy głównie od modelu, czasu dyspozycji, liczby adresów i trasy poza Warszawę. Zamiast ogólnej obietnicy „wycena indywidualna” pokazujemy, co wpływa na koszt i kierujemy do konfiguracji konkretnego przejazdu.",
-    eyebrow: "Cennik",
-    primaryKeyword: "auto do ślubu Warszawa cennik",
+      "Wycena auta do ślubu zależy od modelu, daty, czasu dyspozycji, liczby adresów i trasy poza Warszawę, dlatego kierujemy od razu do konfiguracji konkretnego przejazdu.",
+    eyebrow: "Wycena w konfiguratorze",
+    primaryKeyword: "wycena auta do ślubu Warszawa",
     secondaryKeywords: [
       "samochód do ślubu cena Warszawa",
       "wynajem auta do ślubu cena",
@@ -187,7 +187,7 @@ const corePages: SeoLandingPage[] = [
     footerGroup: "Ceny i kierowca",
     kind: "price",
     h1: "Ile kosztuje auto do ślubu w Warszawie?",
-    title: "Ile kosztuje auto do ślubu w Warszawie | Cena i trasa",
+    title: "Ile kosztuje auto do ślubu",
     description:
       "Ile kosztuje luksusowe auto do ślubu w Warszawie? Wyjaśniamy koszt modelu, czasu wynajmu, trasy, kierowcy i dodatków.",
     lead:
@@ -213,7 +213,7 @@ const corePages: SeoLandingPage[] = [
     footerGroup: "Modele",
     kind: "model",
     h1: "Mercedes S-Klasa do ślubu w Warszawie",
-    title: "Mercedes S-Klasa do ślubu Warszawa | Limuzyna premium",
+    title: "Mercedes S-Klasa do ślubu",
     description:
       "Mercedes-Benz S-Klasa do ślubu w Warszawie. Biała perła, kierowca w cenie, komfortowa tylna kanapa i konfiguracja terminu.",
     lead:
@@ -239,7 +239,7 @@ const corePages: SeoLandingPage[] = [
     footerGroup: "Modele",
     kind: "price",
     h1: "Mercedes S-Klasa do ślubu - cena wynajmu",
-    title: "Mercedes S-Klasa do ślubu cena | Wynajem z kierowcą",
+    title: "Mercedes S-Klasa do ślubu cena",
     description:
       "Cena wynajmu Mercedesa S-Klasy do ślubu zależy od czasu, trasy i dodatków. Sprawdź model z kierowcą w konfiguratorze.",
     lead:
@@ -249,14 +249,14 @@ const corePages: SeoLandingPage[] = [
     secondaryKeywords: [
       "Mercedes do ślubu cena",
       "wynajem Mercedes S-Klasa do ślubu",
-      "Mercedes S-Klasa cennik",
+      "Mercedes S-Klasa cena wynajmu",
     ],
     imageCar: mercedes.slug,
     modelSlug: mercedes.slug,
     searchNeed:
       "Użytkownik jest bardzo blisko zakupu: zna model i pyta już o koszt.",
     promise:
-      "Pokazujemy, co wpływa na cenę S-Klasy, bez ukrywania najważniejszych elementów pakietu.",
+      "Pokazujemy, co wpływa na cenę S-Klasy, bez ukrywania najważniejszych elementów wyceny.",
     ctaHref: "/konfigurator?car=mercedes-s-klasa",
   },
   {
@@ -266,7 +266,7 @@ const corePages: SeoLandingPage[] = [
     footerGroup: "Modele",
     kind: "aesthetic",
     h1: "Biały Mercedes do ślubu w Warszawie",
-    title: "Biały Mercedes do ślubu Warszawa | S-Klasa biała perła",
+    title: "Biały Mercedes do ślubu Warszawa",
     description:
       "Biały Mercedes S-Klasa do ślubu w Warszawie. Elegancki lakier, kierowca w cenie, dekoracje i konfiguracja terminu.",
     lead:
@@ -293,7 +293,7 @@ const corePages: SeoLandingPage[] = [
     footerGroup: "Modele",
     kind: "model",
     h1: "Maserati Ghibli do ślubu w Warszawie",
-    title: "Maserati Ghibli do ślubu Warszawa | Sportowa elegancja",
+    title: "Maserati Ghibli do ślubu",
     description:
       "Maserati Ghibli do ślubu w Warszawie. Sportowa limuzyna z kierowcą, wyrazisty styl i konfiguracja terminu.",
     lead:
@@ -319,7 +319,7 @@ const corePages: SeoLandingPage[] = [
     footerGroup: "Modele",
     kind: "model",
     h1: "Maserati na wesele w Warszawie",
-    title: "Maserati na wesele Warszawa | Ghibli z kierowcą",
+    title: "Maserati na wesele Warszawa",
     description:
       "Maserati na wesele w Warszawie. Ghibli z kierowcą, sportowa elegancja, przejazd pod salę i konfiguracja rezerwacji.",
     lead:
@@ -346,7 +346,7 @@ const corePages: SeoLandingPage[] = [
     footerGroup: "Najważniejsze",
     kind: "aesthetic",
     h1: "Białe auto do ślubu w Warszawie",
-    title: "Białe auto do ślubu Warszawa | Mercedes i Maserati",
+    title: "Białe auto do ślubu Warszawa",
     description:
       "Białe auto do ślubu w Warszawie. Elegancki lakier, kierowca w cenie, dekoracje i konfiguracja terminu.",
     lead:
@@ -372,7 +372,7 @@ const corePages: SeoLandingPage[] = [
     footerGroup: "Najważniejsze",
     kind: "wedding",
     h1: "Samochód na wesele w Warszawie",
-    title: "Samochód na wesele Warszawa | Luksusowe auto z kierowcą",
+    title: "Samochód na wesele Warszawa",
     description:
       "Samochód na wesele w Warszawie z kierowcą. Flota premium, przejazd pod salę, zdjęcia i konfiguracja terminu.",
     lead:
@@ -604,7 +604,7 @@ function createLocalPage(city: CityLandingInfo): SeoLandingPage {
     footerGroup: "Okolice Warszawy",
     kind: "local",
     h1: `Auto do ślubu ${city.name} - luksusowy samochód z kierowcą`,
-    title: `Auto do ślubu ${city.name} | Samochód premium z kierowcą`,
+    title: `Auto do ślubu ${city.name}`,
     description: `Auto do ślubu ${city.name} i okolice. Samochody premium z kierowcą, plan trasy i wycena w konfiguratorze.`,
     lead: `Obsługujemy śluby ${city.locative} i w okolicach Warszawy. Najważniejsze są: punktualny dojazd, jasny plan odbioru, przejazd do ceremonii, sala oraz ewentualna sesja przy aucie.`,
     eyebrow: city.name,
@@ -644,7 +644,7 @@ function createModelLocalPage(
     footerGroup: "Model i okolica",
     kind: "modelLocal",
     h1: `${model.shortName} do ślubu ${city.name}`,
-    title: `${model.shortName} do ślubu ${city.name} | Auto z kierowcą`,
+    title: `${model.shortName} do ślubu ${city.name}`,
     description: `${model.shortName} do ślubu ${city.name}. ${model.style}, kierowca w cenie, trasa z Warszawy i konfiguracja terminu.`,
     lead: `${model.shortName} ${city.locative} to dobry wybór, jeśli macie już wybrany styl auta i chcecie sprawdzić realną obsługę trasy. Podajcie datę, adresy i czas, a my potwierdzimy możliwość przejazdu.`,
     eyebrow: `${model.shortName} · ${city.name}`,
@@ -979,7 +979,7 @@ const guidePages: SeoLandingPage[] = [
     footerGroup: "Poradnik",
     kind: "guide",
     h1: "Sesja ślubna z autem w Warszawie",
-    title: "Sesja ślubna z autem Warszawa | Pomysły i logistyka",
+    title: "Sesja ślubna z autem Warszawa",
     description:
       "Sesja ślubna z autem w Warszawie: jak zaplanować postoje, czas, model i styl zdjęć z Mercedesem lub Maserati.",
     lead:

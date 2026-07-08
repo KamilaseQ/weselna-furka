@@ -4,16 +4,17 @@ import Image from "next/image";
 import { visibleCars, availabilityMeta } from "@/data/cars";
 import { getCarImages } from "@/data/images";
 import { formatPLNShort } from "@/lib/format";
-import { buildPageMetadata, breadcrumbJsonLd } from "@/lib/seo";
+import { buildPageMetadata, breadcrumbJsonLd, itemListJsonLd } from "@/lib/seo";
 import { SectionHeading } from "@/components/SectionHeading";
 import { CtaBand } from "@/components/CtaBand";
 import { Reveal } from "@/components/Reveal";
+import { SeoLinkCluster } from "@/components/SeoLinkCluster";
 import { ArrowRight, CheckIcon } from "@/components/icons";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Samochody do ślubu Warszawa",
   description:
-    "Flota luksusowych samochodów do ślubu w Warszawie: Mercedes-Benz S-Klasa i Maserati Ghibli z kierowcą, cennikiem i konfiguracją trasy.",
+    "Flota luksusowych samochodów do ślubu w Warszawie: Mercedes-Benz S-Klasa i Maserati Ghibli z kierowcą oraz konfiguracją trasy.",
   path: "/flota",
   keywords: [
     "samochody do ślubu Warszawa",
@@ -28,12 +29,25 @@ const breadcrumb = breadcrumbJsonLd([
   { name: "Flota", path: "/flota" },
 ]);
 
+const fleetItemList = itemListJsonLd(
+  "Samochody do ślubu w Warszawie",
+  visibleCars.map((car) => ({
+    name: `${car.name} do ślubu`,
+    path: `/flota/${car.slug}`,
+    description: car.description,
+  }))
+);
+
 export default function FlotaPage() {
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(fleetItemList) }}
       />
       <section className="site-container pb-4 pt-16">
         <Reveal>
@@ -158,6 +172,12 @@ export default function FlotaPage() {
           </section>
         );
       })}
+
+      <SeoLinkCluster
+        className="pt-24"
+        title="Porównaj modele, wycenę i najczęstsze scenariusze."
+        subtitle="Dobre linkowanie między flotą, konfiguracją i poradnikami skraca drogę do konkretnej decyzji."
+      />
 
       <section className="pt-24">
         <CtaBand
