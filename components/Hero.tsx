@@ -74,19 +74,27 @@ export function Hero() {
       <div className="site-container relative grid min-h-[560px] items-center gap-10 py-16 lg:min-h-[calc(100vh-72px)] lg:grid-cols-[1fr_360px] lg:py-20">
         {/* left: rotating brand headline + steps */}
         <div className="max-w-2xl">
+          {/* Explicit line breaks keep the headline at exactly three lines for
+              every brand: the fixed part is forced onto two lines and the brand
+              phrase stays on one (nowrap on desktop). The desktop size is tuned
+              so the longest brand — "Mercedes-Benz" — still fits that one line. */}
           <h1
-            className="text-balance text-5xl leading-[1.04] text-ink opacity-0 animate-fadeUp sm:text-6xl lg:text-[72px]"
+            className="text-5xl leading-[1.04] text-ink opacity-0 animate-fadeUp sm:text-6xl lg:text-[56px]"
             style={{ animationDelay: "120ms" }}
           >
-            Auto do ślubu w Warszawie.
+            Auto do ślubu
             <br />
-            <span
-              key={car.slug}
-              className="inline-block animate-fadeUp italic text-wine"
-            >
-              {car.brand}
+            w Warszawie.
+            <br />
+            <span className="lg:whitespace-nowrap">
+              <span
+                key={car.slug}
+                className="inline-block animate-fadeUp italic text-wine"
+              >
+                {car.brand}
+              </span>
+              {" "}z kierowcą.
             </span>
-            {" "}z kierowcą.
           </h1>
 
           <p
