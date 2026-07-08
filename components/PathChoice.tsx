@@ -9,7 +9,7 @@ interface PathChoiceProps {
 
 const cards = [
   {
-    href: "/pakiety",
+    href: "/cennik",
     index: "01",
     title: "Gotowe pakiety",
     desc: "Trzy warianty w stałych cenach, porównane w jednej tabeli.",

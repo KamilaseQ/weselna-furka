@@ -48,7 +48,7 @@ export function CarCard({ car }: { car: Car }) {
             href={`/flota/${car.slug}`}
             className="text-sm font-medium text-ink-muted transition-colors hover:text-ink"
           >
-            Szczegóły
+            {car.name} do ślubu
           </Link>
           <Link
             href={`/konfigurator?car=${car.slug}`}

@@ -1,15 +1,26 @@
 import type { Metadata } from "next";
 import { CONTACT_EMAIL } from "@/lib/contact";
+import { buildPageMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Polityka prywatności - Weselna Furka",
+export const metadata: Metadata = buildPageMetadata({
+  title: "Polityka prywatności",
   description:
     "Minimalna informacja o przetwarzaniu danych osobowych w formularzu rezerwacji Weselna Furka.",
-};
+  path: "/polityka-prywatnosci",
+});
+
+const breadcrumb = breadcrumbJsonLd([
+  { name: "Strona główna", path: "/" },
+  { name: "Polityka prywatności", path: "/polityka-prywatnosci" },
+]);
 
 export default function PrivacyPolicyPage() {
   return (
     <section className="site-container py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
       <div className="mx-auto max-w-3xl">
         <p className="eyebrow">Prywatność</p>
         <h1 className="mt-3 font-serif text-5xl text-ink">

@@ -6,6 +6,8 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { FaqAccordion } from "@/components/FaqAccordion";
 import { Reveal } from "@/components/Reveal";
 import { PhoneIcon, MailIcon, PinIcon, ClockIcon, ArrowRight } from "@/components/icons";
+import { faq } from "@/data/faq";
+import { buildPageMetadata, breadcrumbJsonLd, faqJsonLd } from "@/lib/seo";
 import {
   CONTACT_EMAIL,
   CONTACT_PHONE,
@@ -15,11 +17,19 @@ import {
   SERVICE_AREA,
 } from "@/lib/contact";
 
-export const metadata: Metadata = {
-  title: "Kontakt — Weselna Furka",
+export const metadata: Metadata = buildPageMetadata({
+  title: "Kontakt - auto do ślubu Warszawa",
   description:
-    "Zadzwoń, napisz mail lub poproś o rezerwację online. Codziennie 9:00–21:00.",
-};
+    "Kontakt w sprawie wynajmu auta do ślubu w Warszawie. Telefon, e-mail, obszar obsługi, godziny i szybkie przejście do konfiguratora.",
+  path: "/kontakt",
+  keywords: ["auto do ślubu Warszawa kontakt", "Weselna Furka kontakt"],
+});
+
+const breadcrumb = breadcrumbJsonLd([
+  { name: "Strona główna", path: "/" },
+  { name: "Kontakt", path: "/kontakt" },
+]);
+const contactFaqSchema = faqJsonLd(faq);
 
 const channels = [
   {
@@ -55,11 +65,19 @@ const channels = [
 export default function KontaktPage() {
   return (
     <section className="site-container py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactFaqSchema) }}
+      />
       <div className="grid gap-12 lg:grid-cols-2">
         <Reveal>
           <p className="eyebrow">Kontakt</p>
           <h1 className="mt-3 text-5xl leading-[1.05] text-ink sm:text-6xl">
-            Porozmawiajmy o Waszym dniu.
+            Kontakt w sprawie auta do ślubu.
           </h1>
           <p className="mt-5 max-w-md text-[17px] leading-relaxed text-ink-muted">
             Najszybciej poprosicie o rezerwację w konfiguratorze — kilka kroków
@@ -83,11 +101,11 @@ export default function KontaktPage() {
                 </div>
               );
               return c.href ? (
-                <a key={c.label} href={c.href} className="block transition hover:-translate-y-0.5">
+                <a key={`${c.label}-${c.value}`} href={c.href} className="block transition hover:-translate-y-0.5">
                   {inner}
                 </a>
               ) : (
-                <div key={c.label}>{inner}</div>
+                <div key={`${c.label}-${c.value}`}>{inner}</div>
               );
             })}
           </div>

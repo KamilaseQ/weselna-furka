@@ -3,6 +3,7 @@ interface SectionHeadingProps {
   title: React.ReactNode;
   subtitle?: string;
   align?: "center" | "left";
+  as?: "h1" | "h2";
   className?: string;
 }
 
@@ -16,15 +17,18 @@ export function SectionHeading({
   title,
   subtitle,
   align = "center",
+  as = "h2",
   className = "",
 }: SectionHeadingProps) {
+  const Title = as;
+
   if (align === "left") {
     return (
       <div className={`text-left ${className}`}>
         {eyebrow && <p className="eyebrow mb-3">{eyebrow}</p>}
-        <h2 className="text-balance text-4xl leading-[1.05] text-ink sm:text-5xl [&_em]:italic [&_em]:text-wine">
+        <Title className="text-balance text-4xl leading-[1.05] text-ink sm:text-5xl [&_em]:italic [&_em]:text-wine">
           {title}
-        </h2>
+        </Title>
         {subtitle && (
           <p className="mt-4 text-[17px] leading-relaxed text-ink-muted">
             {subtitle}
@@ -37,9 +41,9 @@ export function SectionHeading({
   return (
     <div className={`mx-auto max-w-3xl text-center ${className}`}>
       {eyebrow && <p className="eyebrow-rules mb-5">{eyebrow}</p>}
-      <h2 className="text-balance text-4xl leading-[1.05] text-ink sm:text-5xl [&_em]:italic [&_em]:text-wine">
+      <Title className="text-balance text-4xl leading-[1.05] text-ink sm:text-5xl [&_em]:italic [&_em]:text-wine">
         {title}
-      </h2>
+      </Title>
       {subtitle && (
         <p className="mx-auto mt-4 max-w-xl text-[17px] leading-relaxed text-ink-muted">
           {subtitle}

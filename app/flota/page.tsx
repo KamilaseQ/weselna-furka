@@ -4,26 +4,44 @@ import Image from "next/image";
 import { visibleCars, availabilityMeta } from "@/data/cars";
 import { getCarImages } from "@/data/images";
 import { formatPLNShort } from "@/lib/format";
+import { buildPageMetadata, breadcrumbJsonLd } from "@/lib/seo";
 import { SectionHeading } from "@/components/SectionHeading";
 import { CtaBand } from "@/components/CtaBand";
 import { Reveal } from "@/components/Reveal";
 import { ArrowRight, CheckIcon } from "@/components/icons";
 
-export const metadata: Metadata = {
-  title: "Flota — Weselna Furka",
+export const metadata: Metadata = buildPageMetadata({
+  title: "Samochody do ślubu Warszawa",
   description:
-    "Luksusowe samochody na wesele w Warszawie — poznaj każdy model z bliska: wnętrze, detale, specyfikację i cennik.",
-};
+    "Flota luksusowych samochodów do ślubu w Warszawie: Mercedes-Benz S-Klasa i Maserati Ghibli z kierowcą, cennikiem i konfiguracją trasy.",
+  path: "/flota",
+  keywords: [
+    "samochody do ślubu Warszawa",
+    "luksusowe auta do ślubu Warszawa",
+    "Mercedes S-Klasa do ślubu Warszawa",
+    "Maserati Ghibli do ślubu Warszawa",
+  ],
+});
+
+const breadcrumb = breadcrumbJsonLd([
+  { name: "Strona główna", path: "/" },
+  { name: "Flota", path: "/flota" },
+]);
 
 export default function FlotaPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
       <section className="site-container pb-4 pt-16">
         <Reveal>
           <SectionHeading
+            as="h1"
             eyebrow="Nasza flota"
-            title="Poznajcie auta z bliska."
-            subtitle="Każdy model przygotowujemy tak samo starannie. Wybierzcie ten, który pasuje do Waszego dnia."
+            title="Samochody do ślubu w Warszawie."
+            subtitle="Mercedes-Benz S-Klasa i Maserati Ghibli z kierowcą, przygotowaniem auta i jasną ceną przed potwierdzeniem terminu."
           />
         </Reveal>
       </section>
@@ -123,7 +141,7 @@ export default function FlotaPage() {
                     href={`/flota/${car.slug}`}
                     className="text-sm font-medium text-ink-muted underline underline-offset-4 transition-colors hover:text-ink"
                   >
-                    Pełne szczegóły
+                    {car.name} do ślubu - szczegóły
                   </Link>
                 </div>
 

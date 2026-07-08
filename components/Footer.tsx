@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { Logo } from "./Logo";
-import { PhoneIcon, MailIcon, PinIcon } from "./icons";
+import { footerLandingGroups } from "@/data/seo-landings";
 import {
   CONTACT_EMAIL,
   CONTACT_PHONE,
@@ -9,6 +8,8 @@ import {
   SECONDARY_PHONE_HREF,
   SERVICE_AREA,
 } from "@/lib/contact";
+import { Logo } from "./Logo";
+import { MailIcon, PhoneIcon, PinIcon } from "./icons";
 
 export function Footer() {
   return (
@@ -27,10 +28,45 @@ export function Footer() {
             Nawigacja
           </h4>
           <ul className="space-y-2.5 text-sm text-ink-muted">
-            <li><Link href="/flota" className="transition-colors hover:text-ink">Flota</Link></li>
-            <li><Link href="/konfigurator" className="transition-colors hover:text-ink">Konfigurator</Link></li>
-            <li><Link href="/o-nas" className="transition-colors hover:text-ink">O nas</Link></li>
-            <li><Link href="/kontakt" className="transition-colors hover:text-ink">Kontakt</Link></li>
+            <li>
+              <Link href="/flota" className="transition-colors hover:text-ink">
+                Flota
+              </Link>
+            </li>
+            <li>
+              <Link href="/cennik" className="transition-colors hover:text-ink">
+                Cennik
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/konfigurator"
+                className="transition-colors hover:text-ink"
+              >
+                Konfigurator
+              </Link>
+            </li>
+            <li>
+              <Link href="/o-nas" className="transition-colors hover:text-ink">
+                O nas
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/kontakt"
+                className="transition-colors hover:text-ink"
+              >
+                Kontakt
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/poradnik"
+                className="transition-colors hover:text-ink"
+              >
+                Poradnik
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -40,17 +76,26 @@ export function Footer() {
           </h4>
           <ul className="space-y-3 text-sm text-ink-muted">
             <li>
-              <a href={CONTACT_PHONE_HREF} className="inline-flex items-center gap-2 transition-colors hover:text-ink">
+              <a
+                href={CONTACT_PHONE_HREF}
+                className="inline-flex items-center gap-2 transition-colors hover:text-ink"
+              >
                 <PhoneIcon className="h-4 w-4 text-gold" /> {CONTACT_PHONE}
               </a>
             </li>
             <li>
-              <a href={SECONDARY_PHONE_HREF} className="inline-flex items-center gap-2 transition-colors hover:text-ink">
+              <a
+                href={SECONDARY_PHONE_HREF}
+                className="inline-flex items-center gap-2 transition-colors hover:text-ink"
+              >
                 <PhoneIcon className="h-4 w-4 text-gold" /> {SECONDARY_PHONE}
               </a>
             </li>
             <li>
-              <a href={`mailto:${CONTACT_EMAIL}`} className="inline-flex items-center gap-2 transition-colors hover:text-ink">
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="inline-flex items-center gap-2 transition-colors hover:text-ink"
+              >
                 <MailIcon className="h-4 w-4 text-gold" /> {CONTACT_EMAIL}
               </a>
             </li>
@@ -64,21 +109,62 @@ export function Footer() {
           <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider2 text-ink-muted">
             Godziny
           </h4>
-          <p className="text-sm text-ink-muted">Codziennie 9:00 – 21:00</p>
+          <p className="text-sm text-ink-muted">Codziennie 9:00-21:00</p>
           <Link href="/konfigurator" className="btn-primary mt-5 text-sm">
-            Poproś o rezerwację
+            Skonfiguruj przejazd
           </Link>
         </div>
       </div>
 
       <div className="border-t border-ink/10">
+        <div className="site-container py-10">
+          <div className="mb-7 max-w-2xl">
+            <h4 className="text-sm font-semibold uppercase tracking-wider2 text-ink-muted">
+              Popularne tematy
+            </h4>
+            <p className="mt-2 text-sm leading-relaxed text-ink-faint">
+              Najczęściej szukane strony: ceny, kierowca, modele samochodów,
+              okolice Warszawy i poradniki dla par.
+            </p>
+          </div>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {footerLandingGroups.map((group) => (
+              <div key={group.title}>
+                <h5 className="mb-3 text-xs font-semibold uppercase tracking-wider2 text-gold">
+                  {group.title}
+                </h5>
+                <ul className="grid gap-2 text-sm text-ink-muted sm:grid-cols-2 lg:grid-cols-1">
+                  {group.links.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="transition-colors hover:text-ink"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="border-t border-ink/10">
         <div className="site-container flex flex-col items-center justify-between gap-2 py-6 text-xs text-ink-faint sm:flex-row">
-          <p>© {new Date().getFullYear()} Weselna Furka. Wszystkie prawa zastrzeżone.</p>
+          <p>
+            © {new Date().getFullYear()} Weselna Furka. Wszystkie prawa
+            zastrzeżone.
+          </p>
           <p className="flex gap-4">
             <Link href="/zasady-rezerwacji" className="hover:text-ink-muted">
               Zasady rezerwacji
             </Link>
-            <Link href="/polityka-prywatnosci" className="hover:text-ink-muted">
+            <Link
+              href="/polityka-prywatnosci"
+              className="hover:text-ink-muted"
+            >
               Polityka prywatności
             </Link>
           </p>

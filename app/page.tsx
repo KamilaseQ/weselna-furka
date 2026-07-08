@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Hero } from "@/components/Hero";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -7,10 +8,36 @@ import { FaqAccordion } from "@/components/FaqAccordion";
 import { FleetShowcase } from "@/components/FleetShowcase";
 import { CtaBand } from "@/components/CtaBand";
 import { Reveal } from "@/components/Reveal";
+import { faq } from "@/data/faq";
+import { buildPageMetadata, breadcrumbJsonLd, faqJsonLd } from "@/lib/seo";
+
+export const metadata: Metadata = buildPageMetadata({
+  title: "Auto do ślubu Warszawa",
+  description:
+    "Luksusowe auto do ślubu w Warszawie z kierowcą. Mercedes S-Klasa i Maserati, cena od razu w konfiguratorze, bez ukrytych kosztów.",
+  path: "/",
+  keywords: [
+    "auto do ślubu Warszawa",
+    "samochód do ślubu Warszawa",
+    "wynajem auta do ślubu Warszawa",
+    "samochód na wesele Warszawa",
+  ],
+});
+
+const breadcrumb = breadcrumbJsonLd([{ name: "Strona główna", path: "/" }]);
+const homeFaqSchema = faqJsonLd(faq);
 
 export default function HomePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqSchema) }}
+      />
       <Hero />
 
       {/* Fleet — editorial spreads */}

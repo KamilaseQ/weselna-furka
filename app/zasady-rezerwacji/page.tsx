@@ -1,16 +1,27 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CONTACT_EMAIL } from "@/lib/contact";
+import { buildPageMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Zasady rezerwacji - Weselna Furka",
+export const metadata: Metadata = buildPageMetadata({
+  title: "Zasady rezerwacji",
   description:
     "Minimalne zasady wysyłania zgłoszeń rezerwacji auta na wesele przez stronę Weselna Furka.",
-};
+  path: "/zasady-rezerwacji",
+});
+
+const breadcrumb = breadcrumbJsonLd([
+  { name: "Strona główna", path: "/" },
+  { name: "Zasady rezerwacji", path: "/zasady-rezerwacji" },
+]);
 
 export default function BookingRulesPage() {
   return (
     <section className="site-container py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
       <div className="mx-auto max-w-3xl">
         <p className="eyebrow">Zasady</p>
         <h1 className="mt-3 font-serif text-5xl text-ink">

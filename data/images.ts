@@ -13,23 +13,23 @@ export const carImageSets = {
   "mercedes-s-klasa": {
     cover: {
       src: "/images/generated/mercedes-s-klasa-exterior.png",
-      alt: "White Mercedes-Benz S-Class in a bright premium showroom",
+      alt: "Biały Mercedes-Benz S-Klasa do ślubu w Warszawie",
       objectPosition: "center",
     },
     gallery: [
       {
         src: "/images/generated/mercedes-s-klasa-exterior.png",
-        alt: "White Mercedes-Benz S-Class exterior, front three-quarter view",
+        alt: "Mercedes-Benz S-Klasa do ślubu - widok z zewnątrz",
         objectPosition: "center",
       },
       {
         src: "/images/generated/mercedes-s-klasa-interior.png",
-        alt: "Mercedes-Benz S-Class rear passenger cabin with cream leather",
+        alt: "Wnętrze Mercedes-Benz S-Klasa dla pary młodej",
         objectPosition: "center",
       },
       {
         src: "/images/generated/mercedes-s-klasa-detail.png",
-        alt: "Mercedes-Benz S-Class grille, headlight and front wheel detail",
+        alt: "Detale Mercedes-Benz S-Klasa przygotowanego do ślubu",
         objectPosition: "center",
       },
     ],
@@ -37,23 +37,23 @@ export const carImageSets = {
   "maserati-ghibli": {
     cover: {
       src: "/images/generated/maserati-ghibli-exterior.png",
-      alt: "Black Maserati Ghibli in a bright premium showroom",
+      alt: "Maserati Ghibli do ślubu w Warszawie",
       objectPosition: "center",
     },
     gallery: [
       {
         src: "/images/generated/maserati-ghibli-exterior.png",
-        alt: "Black Maserati Ghibli exterior, front three-quarter view",
+        alt: "Maserati Ghibli do ślubu - widok z zewnątrz",
         objectPosition: "center",
       },
       {
         src: "/images/generated/maserati-ghibli-interior.png",
-        alt: "Maserati Ghibli cabin with tan leather interior",
+        alt: "Wnętrze Maserati Ghibli na przejazd ślubny",
         objectPosition: "center",
       },
       {
         src: "/images/generated/maserati-ghibli-detail.png",
-        alt: "Maserati Ghibli grille, headlight, wheel and side vent detail",
+        alt: "Detale Maserati Ghibli przygotowanego na wesele",
         objectPosition: "center",
       },
     ],
@@ -61,23 +61,23 @@ export const carImageSets = {
   "bmw-seria-4": {
     cover: {
       src: "/images/generated/bmw-seria-4-exterior.png",
-      alt: "White BMW 4 Series Coupe in a bright premium showroom",
+      alt: "Białe BMW Seria 4 Coupe do ślubu",
       objectPosition: "center",
     },
     gallery: [
       {
         src: "/images/generated/bmw-seria-4-exterior.png",
-        alt: "White BMW 4 Series Coupe exterior, front three-quarter view",
+        alt: "BMW Seria 4 Coupe do ślubu - widok z zewnątrz",
         objectPosition: "center",
       },
       {
         src: "/images/generated/bmw-seria-4-interior.png",
-        alt: "BMW 4 Series Coupe black leather cockpit",
+        alt: "Wnętrze BMW Seria 4 Coupe",
         objectPosition: "center",
       },
       {
         src: "/images/generated/bmw-seria-4-detail.png",
-        alt: "BMW 4 Series Coupe grille, headlight and front wheel detail",
+        alt: "Detale BMW Seria 4 Coupe",
         objectPosition: "center",
       },
     ],
@@ -93,7 +93,7 @@ export const packageImages = {
   standard: carImageSets["maserati-ghibli"].cover,
   premium: {
     src: "/images/generated/premium-two-cars-wedding.png",
-    alt: "White Mercedes-Benz S-Class and black Maserati Ghibli prepared for a wedding entrance",
+    alt: "Mercedes-Benz S-Klasa i Maserati Ghibli przygotowane do ślubu",
     objectPosition: "center",
   },
 } satisfies Record<string, GeneratedImage>;
@@ -105,12 +105,12 @@ export const pathChoiceImages = {
 
 export const aboutImage: GeneratedImage = {
   src: "/images/generated/about-chauffeur-detailing.png",
-  alt: "Chauffeur in a black suit detailing a white luxury wedding car",
+  alt: "Kierowca przygotowuje luksusowe auto do ślubu",
   objectPosition: "center",
 };
 
 export const contactImage: GeneratedImage = {
   src: "/images/generated/contact-premium-garage.png",
-  alt: "Premium car rental garage with white and black luxury cars",
+  alt: "Garaż z luksusowymi samochodami do ślubu",
   objectPosition: "center",
 };

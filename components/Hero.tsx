@@ -78,19 +78,28 @@ export function Hero() {
             className="text-balance text-5xl leading-[1.04] text-ink opacity-0 animate-fadeUp sm:text-6xl lg:text-[72px]"
             style={{ animationDelay: "120ms" }}
           >
+            Auto do ślubu w Warszawie.
+            <br />
             <span
               key={car.slug}
               className="inline-block animate-fadeUp italic text-wine"
             >
               {car.brand}
             </span>
-            <br />
-            na Wasze wesele.
+            {" "}z kierowcą.
           </h1>
+
+          <p
+            className="mt-6 max-w-xl text-[17px] leading-relaxed text-ink-soft opacity-0 animate-fadeUp"
+            style={{ animationDelay: "220ms" }}
+          >
+            Luksusowy samochód na ślub i wesele: przejrzysta cena,
+            przygotowane auto, kierowca w cenie i konfiguracja trasy online.
+          </p>
 
           {/* three-node step list */}
           <ol
-            className="mt-9 opacity-0 animate-fadeUp"
+            className="mt-8 opacity-0 animate-fadeUp"
             style={{ animationDelay: "280ms" }}
           >
             {STEPS.map((label, i) => (

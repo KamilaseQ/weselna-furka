@@ -1,5 +1,11 @@
+const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+const isLocalSiteUrl =
+  configuredSiteUrl && /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(configuredSiteUrl);
+
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://weselnafurka.pl";
+  configuredSiteUrl && !(process.env.NODE_ENV === "production" && isLocalSiteUrl)
+    ? configuredSiteUrl
+    : "https://www.weselnafurka.pl";
 
 export const CONTACT_EMAIL = "weselnafurka@gmail.com";
 export const OWNER_EMAIL = process.env.OWNER_EMAIL || CONTACT_EMAIL;

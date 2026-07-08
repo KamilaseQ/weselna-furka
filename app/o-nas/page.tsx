@@ -8,12 +8,20 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { CtaBand } from "@/components/CtaBand";
 import { Reveal } from "@/components/Reveal";
 import { ArrowRight } from "@/components/icons";
+import { buildPageMetadata, breadcrumbJsonLd } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "O nas — Weselna Furka",
+export const metadata: Metadata = buildPageMetadata({
+  title: "O nas",
   description:
-    "Dbamy o każdy przyjazd. Rezerwacja ma być prosta, a dzień ślubu spokojny.",
-};
+    "Poznaj Weselną Furkę: wynajem luksusowych aut do ślubu w Warszawie, kierowca w cenie, jasna rezerwacja i spokojna logistyka dnia.",
+  path: "/o-nas",
+  keywords: ["Weselna Furka", "wynajem aut do ślubu Warszawa", "auto do ślubu z kierowcą"],
+});
+
+const breadcrumb = breadcrumbJsonLd([
+  { name: "Strona główna", path: "/" },
+  { name: "O nas", path: "/o-nas" },
+]);
 
 const steps = [
   {
@@ -41,13 +49,17 @@ const steps = [
 export default function ONasPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
       {/* hero */}
       <section className="site-container py-16">
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <Reveal>
             <p className="eyebrow">O nas</p>
             <h1 className="mt-3 text-5xl leading-[1.05] text-ink sm:text-6xl">
-              Dbamy o każdy przyjazd.
+              Weselna Furka: auto do ślubu bez chaosu.
             </h1>
             <p className="mt-5 max-w-md text-[17px] leading-relaxed text-ink-muted">
               Rezerwacja ma być prosta, a dzień ślubu spokojny. Zbudowaliśmy

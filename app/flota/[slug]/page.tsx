@@ -7,6 +7,7 @@ import { addons } from "@/data/addons";
 import { reviews } from "@/data/reviews";
 import { getCarImages } from "@/data/images";
 import { formatPLNShort } from "@/lib/format";
+import { absoluteUrl, breadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
 import { Reveal } from "@/components/Reveal";
 import {
   CheckIcon,
@@ -26,10 +27,21 @@ export function generateMetadata({
 }): Metadata {
   const car = getCar(params.slug);
   if (!car || car.hidden) return { title: "Auto — Weselna Furka" };
-  return {
-    title: `${car.name} na wesele — Weselna Furka`,
-    description: car.blurb,
-  };
+  const images = getCarImages(car.slug);
+  return buildPageMetadata({
+    title: `${car.name} do ślubu Warszawa`,
+    description: `${car.name} do ślubu w Warszawie z kierowcą. Cena od ${formatPLNShort(
+      car.basePrice
+    )}, przygotowanie auta, dekoracje i konfiguracja terminu online.`,
+    path: `/flota/${car.slug}`,
+    image: images.cover.src,
+    keywords: [
+      `${car.name} do ślubu Warszawa`,
+      `${car.name} na wesele`,
+      `${car.brand} z kierowcą Warszawa`,
+      "auto do ślubu Warszawa",
+    ],
+  });
 }
 
 export default function CarDetailPage({
@@ -46,9 +58,52 @@ export default function CarDetailPage({
   const carReview = reviews.find((r) =>
     r.car.toLowerCase().includes(brandKey)
   );
+  const pagePath = `/flota/${car.slug}`;
+  const breadcrumb = breadcrumbJsonLd([
+    { name: "Strona główna", path: "/" },
+    { name: "Flota", path: "/flota" },
+    { name: car.name, path: pagePath },
+  ]);
+  const serviceJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${absoluteUrl(pagePath)}#service`,
+    name: `${car.name} do ślubu z kierowcą`,
+    description: car.description,
+    url: absoluteUrl(pagePath),
+    serviceType: "Wynajem samochodu do ślubu z kierowcą",
+    areaServed: "Warszawa i okolice",
+    provider: {
+      "@type": "AutoRental",
+      "@id": `${absoluteUrl("/")}#business`,
+      name: "Weselna Furka",
+    },
+    offers: {
+      "@type": "Offer",
+      price: car.basePrice,
+      priceCurrency: "PLN",
+      url: absoluteUrl(`/konfigurator?car=${car.slug}`),
+      availability: "https://schema.org/InStock",
+      itemOffered: {
+        "@type": "Vehicle",
+        name: car.name,
+        brand: car.brand,
+        vehicleModelDate: String(car.year),
+        vehicleSeatingCapacity: car.seats,
+      },
+    },
+  };
 
   return (
     <div className="site-container py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
       <Link
         href="/flota"
         className="text-sm text-ink-muted transition-colors hover:text-ink"
@@ -107,7 +162,9 @@ export default function CarDetailPage({
         {/* info */}
         <Reveal delay={120}>
           <p className="eyebrow">{car.tagline}</p>
-          <h1 className="mt-2 text-5xl text-ink">{car.name}</h1>
+          <h1 className="mt-2 text-5xl text-ink">
+            {car.name} do ślubu w Warszawie
+          </h1>
 
           <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-ink-muted">
             <span>{car.type}</span>
