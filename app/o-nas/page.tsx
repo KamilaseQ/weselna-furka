@@ -83,8 +83,11 @@ export default function ONasPage() {
                 alt={aboutImage.alt}
                 fill
                 priority
+                placeholder="blur"
+                blurDataURL={aboutImage.blurDataURL}
                 sizes="(min-width: 1024px) 440px, 90vw"
                 className="object-cover"
+                style={{ objectPosition: aboutImage.objectPosition ?? "center" }}
               />
             </div>
           </Reveal>
@@ -125,8 +128,15 @@ export default function ONasPage() {
                 src={carImageSets["mercedes-s-klasa"].gallery[1].src}
                 alt={carImageSets["mercedes-s-klasa"].gallery[1].alt}
                 fill
+                placeholder="blur"
+                blurDataURL={carImageSets["mercedes-s-klasa"].gallery[1].blurDataURL}
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
+                style={{
+                  objectPosition:
+                    carImageSets["mercedes-s-klasa"].gallery[1].objectPosition ??
+                    "center",
+                }}
               />
             </div>
           </Reveal>

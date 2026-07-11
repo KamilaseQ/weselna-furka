@@ -122,6 +122,7 @@ export default function KontaktPage() {
               src={contactImage.src}
               alt={contactImage.alt}
               objectPosition={contactImage.objectPosition}
+              blurDataURL={contactImage.blurDataURL}
               variant="studio"
               className="aspect-[4/5] lg:aspect-auto lg:h-full"
               sizes="(min-width: 1024px) 50vw, 100vw"

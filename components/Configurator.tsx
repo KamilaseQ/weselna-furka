@@ -7,7 +7,7 @@ import { visibleCars, availabilityMeta } from "@/data/cars";
 import { addons } from "@/data/addons";
 import { getCarImages } from "@/data/images";
 import { calculatePrice, INCLUDED_KM, KM_RATE } from "@/lib/pricing";
-import { formatPLNShort } from "@/lib/format";
+import { formatCapacityLabel, formatPLNShort } from "@/lib/format";
 import { Calendar, formatPolishDate, todayISO, toISODate } from "./Calendar";
 import { RouteMap, type MapStop } from "./RouteMap";
 import {
@@ -38,7 +38,6 @@ const STEPS = [
 ] as const;
 
 const MAX_STOPS = 6;
-const GALLERY_LABELS = ["Zewnętrze", "Wnętrze", "Detal"] as const;
 
 /** share-link format: lat~lng~name, stops joined with | */
 function parseStopsParam(raw: string | null, nextId: () => string): MapStop[] {
@@ -625,14 +624,14 @@ export function Configurator() {
                           {c.name}
                         </span>
                         <span className="mt-0.5 block text-xs text-ink-muted">
-                          Rocznik {c.year} · {c.seats} miejsca · biała perła
+                          Rocznik {c.year} · {formatCapacityLabel(c.seats)} · biała perła
                         </span>
                         <span className="mt-1.5 flex items-center gap-1.5 text-xs">
                           <span className={`h-1.5 w-1.5 rounded-full ${m.dot}`} />
                           <span className={m.text}>{c.availabilityNote}</span>
                         </span>
                       </span>
-                      <span className="shrink-0 text-right text-sm text-ink-muted">
+                      <span className="shrink-0 whitespace-nowrap text-right text-sm text-ink-muted">
                         od{" "}
                         <span className="block font-serif text-xl leading-tight text-ink">
                           {formatPLNShort(c.basePrice)}
@@ -671,12 +670,17 @@ export function Configurator() {
                     alt={gallery[photoIdx].alt}
                     fill
                     priority
+                    placeholder="blur"
+                    blurDataURL={gallery[photoIdx].blurDataURL}
                     sizes="(min-width: 1024px) 60vw, 100vw"
                     className="animate-fadeIn object-cover"
+                    style={{
+                      objectPosition: gallery[photoIdx].objectPosition ?? "center",
+                    }}
                   />
                   <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-gradient-to-t from-ink/60 to-transparent px-6 pb-4 pt-10 text-[11px] font-medium uppercase tracking-wider2 text-cream-50">
                     <span>{car.name}</span>
-                    <span>{GALLERY_LABELS[photoIdx]}</span>
+                    <span>{gallery[photoIdx].label}</span>
                   </div>
                 </div>
                 <div className="mt-3 grid grid-cols-3 gap-3">
@@ -685,7 +689,7 @@ export function Configurator() {
                       key={img.src}
                       type="button"
                       onClick={() => setPhotoIdx(i)}
-                      aria-label={GALLERY_LABELS[i]}
+                      aria-label={img.label ?? img.alt}
                       className={`relative aspect-[4/3] overflow-hidden rounded-xl border-2 transition-all duration-300 ${
                         photoIdx === i
                           ? "border-wine"
@@ -696,8 +700,11 @@ export function Configurator() {
                         src={img.src}
                         alt={img.alt}
                         fill
+                        placeholder="blur"
+                        blurDataURL={img.blurDataURL}
                         sizes="180px"
                         className="object-cover"
+                        style={{ objectPosition: img.objectPosition ?? "center" }}
                       />
                     </button>
                   ))}

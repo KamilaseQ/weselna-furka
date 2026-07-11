@@ -14,11 +14,11 @@ export const cars: Car[] = [
   {
     slug: "mercedes-s-klasa",
     name: "Mercedes-Benz S-Klasa",
-    tagline: "Executive Sedan",
+    tagline: "Limuzyna",
     brand: "Mercedes-Benz",
     shape: "limo",
-    year: 2023,
-    seats: 4,
+    year: 2019,
+    seats: 5,
     type: "Limuzyna premium",
     basePrice: 2500,
     pricePerHour: 400,
@@ -27,17 +27,17 @@ export const cars: Car[] = [
     blurb:
       "Cisza, przestrzeń i nieskazitelna elegancja. Najbardziej rozpoznawalna limuzyna świata na najważniejszy dzień.",
     description:
-      "S-Klasa to definicja luksusu: skórzane fotele z funkcją masażu, ambientowe oświetlenie wnętrza i prowadzenie tak gładkie, że suknia panny młodej dojedzie bez jednego zagniecenia. Idealna do reprezentacyjnego przejazdu na ceremonię i salę.",
+      "S-Klasa to spokojna, reprezentacyjna limuzyna z silnikiem V8 470 KM, skórzanym wnętrzem i podgrzewanymi fotelami. Idealna do eleganckiego przejazdu na ceremonię, salę i sesję zdjęciową.",
     colors: [pearlWhite],
     defaultColorId: "white",
     recommended: true,
     specs: [
       { label: "Nadwozie", value: "Limuzyna long" },
+      { label: "Silnik", value: "V8 470 KM" },
+      { label: "Miejsca", value: "Samochód 5-osobowy" },
+      { label: "Wnętrze", value: "Skórzane, podgrzewane fotele" },
       { label: "Kolor", value: "Biała perła" },
-      { label: "Miejsca", value: "4 (komfort)" },
-      { label: "Wnętrze", value: "Skóra Nappa, klimatyzowane fotele" },
-      { label: "Rocznik", value: "2023" },
-      { label: "Kierowca", value: "W cenie, w garniturze" },
+      { label: "Rocznik", value: "2019" },
     ],
     included: [
       "Kierowca w garniturze i pełnym przygotowaniu",
@@ -50,11 +50,11 @@ export const cars: Car[] = [
   {
     slug: "maserati-ghibli",
     name: "Maserati Ghibli",
-    tagline: "Italian Grand Tourer",
+    tagline: "Włoska limuzyna",
     brand: "Maserati",
     shape: "sedan",
-    year: 2022,
-    seats: 4,
+    year: 2021,
+    seats: 5,
     type: "Sportowa limuzyna",
     basePrice: 2500,
     pricePerHour: 450,
@@ -63,16 +63,16 @@ export const cars: Car[] = [
     blurb:
       "Włoski charakter i wyrazisty dźwięk silnika. Dla pary, która ceni sportową elegancję.",
     description:
-      "Ghibli łączy elegancję limuzyny z duszą sportowego coupe. Charakterystyczny grill z trójzębem, skórzane wnętrze i brzmienie, które słychać zanim auto wjedzie przed salę. Dla pary, która chce, by ich auto miało osobowość.",
+      "Ghibli łączy elegancję limuzyny z włoskim charakterem. Ma silnik V6 430 KM, skórzane fotele i brzmienie, które słychać zanim auto wjedzie przed salę. Dla pary, która chce, by ich auto miało osobowość.",
     colors: [pearlWhite],
     defaultColorId: "white",
     specs: [
       { label: "Nadwozie", value: "Sportowa limuzyna" },
+      { label: "Silnik", value: "V6 430 KM" },
+      { label: "Miejsca", value: "Samochód 5-osobowy" },
+      { label: "Wnętrze", value: "Skórzane fotele" },
       { label: "Kolor", value: "Biała perła" },
-      { label: "Miejsca", value: "4" },
-      { label: "Wnętrze", value: "Skóra Poltrona Frau" },
-      { label: "Rocznik", value: "2022" },
-      { label: "Kierowca", value: "W cenie, w garniturze" },
+      { label: "Rocznik", value: "2021" },
     ],
     included: [
       "Kierowca w garniturze i pełnym przygotowaniu",
@@ -108,7 +108,6 @@ export const cars: Car[] = [
       { label: "Miejsca", value: "4" },
       { label: "Wnętrze", value: "Skóra Vernasca" },
       { label: "Rocznik", value: "2023" },
-      { label: "Kierowca", value: "W cenie, w garniturze" },
     ],
     included: [
       "Kierowca w garniturze i pełnym przygotowaniu",

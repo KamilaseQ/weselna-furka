@@ -1,85 +1,97 @@
-export interface GeneratedImage {
+import blurData from "./blur-placeholders.json";
+
+export interface SiteImage {
   src: string;
   alt: string;
   objectPosition?: string;
+  /** short caption shown on gallery thumbnails, e.g. "Zewnętrze" */
+  label?: string;
+  /** tiny base64 preview shown while the full image loads */
+  blurDataURL?: string;
 }
 
 export interface CarImageSet {
-  cover: GeneratedImage;
-  gallery: GeneratedImage[];
+  cover: SiteImage;
+  gallery: SiteImage[];
+}
+
+const blur = blurData as Record<string, string>;
+
+/** build a SiteImage and auto-attach its blur placeholder by src */
+function img(
+  src: string,
+  alt: string,
+  objectPosition?: string,
+  label?: string
+): SiteImage {
+  return { src, alt, objectPosition, label, blurDataURL: blur[src] };
 }
 
 export const carImageSets = {
   "mercedes-s-klasa": {
-    cover: {
-      src: "/images/generated/mercedes-s-klasa-exterior.png",
-      alt: "Biały Mercedes-Benz S-Klasa do ślubu w Warszawie",
-      objectPosition: "center",
-    },
+    cover: img(
+      "/images/cars/mercedes-s-klasa-cover.jpg",
+      "Biały Mercedes-Benz S-Klasa do ślubu w Warszawie",
+      "58% center"
+    ),
     gallery: [
-      {
-        src: "/images/generated/mercedes-s-klasa-exterior.png",
-        alt: "Mercedes-Benz S-Klasa do ślubu - widok z zewnątrz",
-        objectPosition: "center",
-      },
-      {
-        src: "/images/generated/mercedes-s-klasa-interior.png",
-        alt: "Wnętrze Mercedes-Benz S-Klasa dla pary młodej",
-        objectPosition: "center",
-      },
-      {
-        src: "/images/generated/mercedes-s-klasa-detail.png",
-        alt: "Detale Mercedes-Benz S-Klasa przygotowanego do ślubu",
-        objectPosition: "center",
-      },
+      img(
+        "/images/cars/mercedes-s-klasa-cover.jpg",
+        "Mercedes-Benz S-Klasa do ślubu - widok z zewnątrz",
+        "58% center",
+        "Z boku"
+      ),
+      img(
+        "/images/cars/mercedes-s-klasa-front.jpg",
+        "Mercedes-Benz S-Klasa do ślubu przed salą weselną",
+        "center",
+        "Z przodu"
+      ),
+      img(
+        "/images/cars/mercedes-s-klasa-venue.jpg",
+        "Biały Mercedes-Benz S-Klasa gotowy na przejazd ślubny",
+        "center",
+        "Przy sali"
+      ),
+      img(
+        "/images/cars/mercedes-s-klasa-interior.jpg",
+        "Wnętrze Mercedes-Benz S-Klasa dla pary młodej",
+        "54% center",
+        "Wnętrze"
+      ),
+      img(
+        "/images/cars/mercedes-s-klasa-detail.jpg",
+        "Detale Mercedes-Benz S-Klasa przygotowanego do ślubu",
+        "center",
+        "Detal"
+      ),
     ],
   },
   "maserati-ghibli": {
-    cover: {
-      src: "/images/generated/maserati-ghibli-exterior.png",
-      alt: "Maserati Ghibli do ślubu w Warszawie",
-      objectPosition: "center",
-    },
+    cover: img(
+      "/images/cars/maserati-ghibli-cover.jpg",
+      "Maserati Ghibli do ślubu w Warszawie",
+      "60% center"
+    ),
     gallery: [
-      {
-        src: "/images/generated/maserati-ghibli-exterior.png",
-        alt: "Maserati Ghibli do ślubu - widok z zewnątrz",
-        objectPosition: "center",
-      },
-      {
-        src: "/images/generated/maserati-ghibli-interior.png",
-        alt: "Wnętrze Maserati Ghibli na przejazd ślubny",
-        objectPosition: "center",
-      },
-      {
-        src: "/images/generated/maserati-ghibli-detail.png",
-        alt: "Detale Maserati Ghibli przygotowanego na wesele",
-        objectPosition: "center",
-      },
-    ],
-  },
-  "bmw-seria-4": {
-    cover: {
-      src: "/images/generated/bmw-seria-4-exterior.png",
-      alt: "Białe BMW Seria 4 Coupe do ślubu",
-      objectPosition: "center",
-    },
-    gallery: [
-      {
-        src: "/images/generated/bmw-seria-4-exterior.png",
-        alt: "BMW Seria 4 Coupe do ślubu - widok z zewnątrz",
-        objectPosition: "center",
-      },
-      {
-        src: "/images/generated/bmw-seria-4-interior.png",
-        alt: "Wnętrze BMW Seria 4 Coupe",
-        objectPosition: "center",
-      },
-      {
-        src: "/images/generated/bmw-seria-4-detail.png",
-        alt: "Detale BMW Seria 4 Coupe",
-        objectPosition: "center",
-      },
+      img(
+        "/images/cars/maserati-ghibli-cover.jpg",
+        "Maserati Ghibli do ślubu - widok z zewnątrz",
+        "60% center",
+        "Z przodu"
+      ),
+      img(
+        "/images/cars/maserati-ghibli-rear.jpg",
+        "Maserati Ghibli do ślubu - widok z tyłu",
+        "center",
+        "Z tyłu"
+      ),
+      img(
+        "/images/cars/maserati-ghibli-detail.jpg",
+        "Detale Maserati Ghibli przygotowanego na wesele",
+        "58% center",
+        "Wnętrze"
+      ),
     ],
   },
 } satisfies Record<string, CarImageSet>;
@@ -90,21 +102,21 @@ export function getCarImages(slug: string): CarImageSet {
 
 export const pathChoiceImages = {
   configurator: carImageSets["maserati-ghibli"].cover,
-  fleet: {
-    src: "/images/generated/premium-two-cars-wedding.png",
-    alt: "Mercedes-Benz S-Klasa i Maserati Ghibli przygotowane do ślubu",
-    objectPosition: "center",
-  },
-} satisfies Record<string, GeneratedImage>;
+  fleet: img(
+    "/images/site/fleet-exterior.jpg",
+    "Mercedes-Benz S-Klasa z floty aut do ślubu",
+    "55% center"
+  ),
+} satisfies Record<string, SiteImage>;
 
-export const aboutImage: GeneratedImage = {
-  src: "/images/generated/about-chauffeur-detailing.png",
-  alt: "Kierowca przygotowuje luksusowe auto do ślubu",
-  objectPosition: "center",
-};
+export const aboutImage: SiteImage = img(
+  "/images/site/about-mercedes-venue.jpg",
+  "Mercedes-Benz S-Klasa przygotowany do ślubu przed eleganckim obiektem",
+  "center"
+);
 
-export const contactImage: GeneratedImage = {
-  src: "/images/generated/contact-premium-garage.png",
-  alt: "Garaż z luksusowymi samochodami do ślubu",
-  objectPosition: "center",
-};
+export const contactImage: SiteImage = img(
+  "/images/site/contact-mercedes-venue.jpg",
+  "Biały Mercedes-Benz S-Klasa do ślubu przed salą weselną",
+  "center"
+);

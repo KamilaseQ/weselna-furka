@@ -459,8 +459,11 @@ export function SeoLandingPage({ page }: { page: SeoLandingPageData }) {
                 alt={image.alt}
                 fill
                 priority
+                placeholder="blur"
+                blurDataURL={image.blurDataURL}
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
+                style={{ objectPosition: image.objectPosition ?? "center" }}
               />
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/75 to-transparent p-6 text-cream-50">
                 <p className="text-xs uppercase tracking-wider2 text-gold-soft">

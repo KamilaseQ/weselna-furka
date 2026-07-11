@@ -7,5 +7,10 @@ export function formatPLN(value: number): string {
 }
 
 export function formatPLNShort(value: number): string {
-  return `${value.toLocaleString("pl-PL")} zł`;
+  const amount = value.toLocaleString("pl-PL").replace(/\s/g, "\u00A0");
+  return `${amount}\u00A0zł`;
+}
+
+export function formatCapacityLabel(seats: number): string {
+  return `samochód ${seats}-osobowy`;
 }

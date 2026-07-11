@@ -6,6 +6,7 @@ interface PlaceholderImageProps {
   src?: string;
   alt?: string;
   objectPosition?: string;
+  blurDataURL?: string;
   sizes?: string;
   /** aspect ratio helper class, e.g. "aspect-[4/3]" */
   className?: string;
@@ -29,6 +30,7 @@ export function PlaceholderImage({
   src,
   alt,
   objectPosition = "center",
+  blurDataURL,
   sizes = "(min-width: 1024px) 33vw, 100vw",
   className = "aspect-[4/3]",
   variant = "studio",
@@ -45,6 +47,7 @@ export function PlaceholderImage({
           alt={alt ?? label}
           fill
           sizes={sizes}
+          {...(blurDataURL ? { placeholder: "blur" as const, blurDataURL } : {})}
           className="object-cover"
           style={{ objectPosition }}
         />

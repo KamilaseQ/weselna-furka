@@ -81,8 +81,11 @@ export default function FlotaPage() {
                     src={images.cover.src}
                     alt={images.cover.alt}
                     fill
+                    placeholder="blur"
+                    blurDataURL={images.cover.blurDataURL}
                     sizes="(min-width: 1024px) 52vw, 100vw"
                     className="object-cover transition-transform duration-[1600ms] ease-out-expo group-hover:scale-[1.04]"
+                    style={{ objectPosition: images.cover.objectPosition ?? "center" }}
                   />
                 </div>
                 <div className="mt-4 grid grid-cols-2 gap-4">
@@ -95,8 +98,11 @@ export default function FlotaPage() {
                         src={img.src}
                         alt={img.alt}
                         fill
+                        placeholder="blur"
+                        blurDataURL={img.blurDataURL}
                         sizes="(min-width: 1024px) 25vw, 50vw"
                         className="object-cover transition-transform duration-[1200ms] ease-out-expo hover:scale-[1.05]"
+                        style={{ objectPosition: img.objectPosition ?? "center" }}
                       />
                     </div>
                   ))}

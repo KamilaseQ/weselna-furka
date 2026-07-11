@@ -7,7 +7,7 @@ import Image from "next/image";
 import { visibleCars } from "@/data/cars";
 import { addons } from "@/data/addons";
 import { getCarImages } from "@/data/images";
-import type { GeneratedImage } from "@/data/images";
+import type { SiteImage } from "@/data/images";
 import { DateField } from "./DateField";
 import { formatPolishDate } from "./Calendar";
 import { CONTACT_PHONE, CONTACT_PHONE_HREF } from "@/lib/contact";
@@ -32,7 +32,7 @@ interface ResolvedConfig {
   priceLabel: string;
   /** custom route / other → priced individually, no fixed total shown */
   individual: boolean;
-  image?: GeneratedImage;
+  image?: SiteImage;
 }
 
 function useResolved(): ResolvedConfig {
@@ -433,8 +433,11 @@ export function ReservationForm() {
                     alt={cfg.image.alt}
                     fill
                     priority
+                    placeholder="blur"
+                    blurDataURL={cfg.image.blurDataURL}
                     sizes="(min-width: 1024px) 460px, 100vw"
                     className="object-cover"
+                    style={{ objectPosition: cfg.image.objectPosition ?? "center" }}
                   />
                 </div>
               )}

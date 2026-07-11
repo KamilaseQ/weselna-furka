@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { SITE_URL } from "@/lib/contact";
 
 export const SITE_NAME = "Weselna Furka";
-export const DEFAULT_OG_IMAGE = "/images/generated/premium-two-cars-wedding.png";
+export const DEFAULT_OG_IMAGE = "/images/site/default-og.jpg";
 
 export function absoluteUrl(path = "/") {
   return new URL(path, `${SITE_URL}/`).toString();

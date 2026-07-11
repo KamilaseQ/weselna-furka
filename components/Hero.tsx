@@ -58,10 +58,13 @@ export function Hero() {
               alt=""
               fill
               priority={i === 0}
+              placeholder="blur"
+              blurDataURL={img.blurDataURL}
               sizes="100vw"
-              className={`object-cover object-[65%_center] transition-all duration-[1600ms] ease-out-expo ${
+              className={`object-cover transition-all duration-[1600ms] ease-out-expo ${
                 active ? "opacity-100 scale-100" : "opacity-0 scale-[1.04]"
               }`}
+              style={{ objectPosition: img.objectPosition ?? "65% center" }}
             />
           );
         })}

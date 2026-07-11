@@ -1,0 +1,35 @@
+
+> furki-weselne@0.1.0 dev
+> next dev --hostname 127.0.0.1 --port 3000
+
+  ▲ Next.js 14.2.35
+  - Local:        http://127.0.0.1:3000
+  - Network:      http://127.0.0.1:3000
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 12s
+ ○ Compiling / ...
+ ✓ Compiled / in 14.7s (614 modules)
+ GET / 200 in 16317ms
+ ○ Compiling /[slug] ...
+ ✓ Compiled /[slug] in 3s (607 modules)
+ GET /favicon.ico 404 in 5411ms
+ ✓ Compiled /flota/[slug] in 375ms (597 modules)
+ GET /flota/mercedes-s-klasa 200 in 865ms
+ GET /flota/maserati-ghibli 200 in 123ms
+ ✓ Compiled in 945ms (593 modules)
+ ✓ Compiled in 1658ms (593 modules)
+ ✓ Compiled in 502ms (294 modules)
+ ✓ Compiled in 356ms (313 modules)
+ ✓ Compiled in 1445ms (607 modules)
+ ✓ Compiled in 795ms (607 modules)
+ ✓ Compiled in 361ms (294 modules)
+ ✓ Compiled in 982ms (607 modules)
+ ✓ Compiled in 308ms (294 modules)
+ ✓ Compiled in 720ms (607 modules)
+ ✓ Compiled in 565ms (294 modules)
+ ✓ Compiled in 481ms (294 modules)
+ ✓ Compiled in 370ms (294 modules)
+ ✓ Compiled in 671ms (294 modules)
+ ✓ Compiled in 385ms (294 modules)

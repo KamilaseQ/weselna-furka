@@ -22,8 +22,11 @@ export function CarCard({ car }: { car: Car }) {
           src={cover.src}
           alt={cover.alt}
           fill
+          placeholder="blur"
+          blurDataURL={cover.blurDataURL}
           sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 100vw"
           className="object-cover transition-transform duration-[1200ms] ease-out-expo group-hover:scale-[1.05]"
+          style={{ objectPosition: cover.objectPosition ?? "center" }}
         />
       </div>
 
@@ -38,7 +41,7 @@ export function CarCard({ car }: { car: Car }) {
             <span className={`h-2 w-2 rounded-full ${meta.dot}`} />
             <span className={meta.text}>{meta.label}</span>
           </span>
-          <span className="text-ink-muted">
+          <span className="whitespace-nowrap text-ink-muted">
             od <span className="font-medium text-ink">{formatPLNShort(car.basePrice)}</span>
           </span>
         </div>

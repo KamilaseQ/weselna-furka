@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { visibleCars } from "@/data/cars";
 import { getCarImages } from "@/data/images";
-import { formatPLNShort } from "@/lib/format";
+import { formatCapacityLabel, formatPLNShort } from "@/lib/format";
 import { Reveal } from "./Reveal";
 import { ArrowRight } from "./icons";
 
@@ -35,8 +35,11 @@ export function FleetShowcase() {
                     src={cover.src}
                     alt={cover.alt}
                     fill
+                    placeholder="blur"
+                    blurDataURL={cover.blurDataURL}
                     sizes="(min-width: 1024px) 55vw, 100vw"
                     className="object-cover transition-transform duration-[1600ms] ease-out-expo hover:scale-[1.04]"
+                    style={{ objectPosition: cover.objectPosition ?? "center" }}
                   />
                 </div>
                 {/* vertical caption on the photo edge */}
@@ -63,7 +66,7 @@ export function FleetShowcase() {
                       0{i + 1}
                     </span>
                     <span className="text-[11px] font-medium uppercase tracking-wider2 text-ink-faint">
-                      Biała perła · {car.seats} miejsca
+                      Biała perła · {formatCapacityLabel(car.seats)}
                     </span>
                   </div>
                   <h3 className="mt-4 font-serif text-3xl text-ink sm:text-4xl">
@@ -72,14 +75,14 @@ export function FleetShowcase() {
                   <p className="mt-3 text-sm leading-relaxed text-ink-muted">
                     {car.blurb}
                   </p>
-                  <div className="mt-6 flex items-center justify-between border-t border-ink/8 pt-5">
-                    <p className="text-sm text-ink-muted">
+                  <div className="mt-6 flex flex-col gap-4 border-t border-ink/8 pt-5 sm:flex-row sm:items-center sm:justify-between">
+                    <p className="whitespace-nowrap text-sm text-ink-muted">
                       od{" "}
                       <span className="font-serif text-2xl text-ink">
                         {formatPLNShort(car.basePrice)}
                       </span>
                     </p>
-                    <div className="flex items-center gap-5">
+                    <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
                       <Link
                         href={`/flota/${car.slug}`}
                         className="text-sm font-medium text-ink-muted transition-colors hover:text-ink"

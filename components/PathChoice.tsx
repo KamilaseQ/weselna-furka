@@ -43,8 +43,11 @@ export function PathChoice({ className = "" }: PathChoiceProps) {
                 src={image.src}
                 alt={image.alt}
                 fill
+                placeholder="blur"
+                blurDataURL={image.blurDataURL}
                 sizes="(min-width: 768px) 45vw, 100vw"
                 className="object-cover transition-transform duration-[1400ms] ease-out-expo group-hover:scale-[1.04]"
+                style={{ objectPosition: image.objectPosition ?? "center" }}
               />
               <span className="absolute left-5 top-5 rounded-full bg-ink/60 px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-wider2 text-cream-50 backdrop-blur-sm">
                 {c.index}

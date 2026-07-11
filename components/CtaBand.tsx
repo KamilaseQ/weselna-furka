@@ -27,8 +27,11 @@ export function CtaBand({
           alt=""
           aria-hidden
           fill
+          placeholder="blur"
+          blurDataURL={bandImage.blurDataURL}
           sizes="(min-width: 1280px) 1216px, 100vw"
           className="object-cover"
+          style={{ objectPosition: bandImage.objectPosition ?? "center" }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-ink/85 via-ink/75 to-ink/90" />
         <div

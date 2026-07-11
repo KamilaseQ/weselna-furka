@@ -4,16 +4,14 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { visibleCars, getCar, availabilityMeta } from "@/data/cars";
 import { addons } from "@/data/addons";
-import { reviews } from "@/data/reviews";
 import { getCarImages } from "@/data/images";
-import { formatPLNShort } from "@/lib/format";
+import { formatCapacityLabel, formatPLNShort } from "@/lib/format";
 import { absoluteUrl, breadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
 import { Reveal } from "@/components/Reveal";
 import {
   CheckIcon,
   ArrowRight,
   CalendarIcon,
-  StarIcon,
 } from "@/components/icons";
 
 export function generateStaticParams() {
@@ -54,10 +52,6 @@ export default function CarDetailPage({
 
   const meta = availabilityMeta[car.availability];
   const images = getCarImages(car.slug);
-  const brandKey = car.brand.split("-")[0].toLowerCase();
-  const carReview = reviews.find((r) =>
-    r.car.toLowerCase().includes(brandKey)
-  );
   const pagePath = `/flota/${car.slug}`;
   const breadcrumb = breadcrumbJsonLd([
     { name: "Strona główna", path: "/" },
@@ -120,8 +114,11 @@ export default function CarDetailPage({
               alt={images.cover.alt}
               fill
               priority
+              placeholder="blur"
+              blurDataURL={images.cover.blurDataURL}
               sizes="(min-width: 1024px) 55vw, 100vw"
               className="object-cover"
+              style={{ objectPosition: images.cover.objectPosition ?? "center" }}
             />
           </div>
           <div className="mt-4 grid grid-cols-2 gap-4">
@@ -134,29 +131,15 @@ export default function CarDetailPage({
                   src={image.src}
                   alt={image.alt}
                   fill
+                  placeholder="blur"
+                  blurDataURL={image.blurDataURL}
                   sizes="(min-width: 1024px) 27vw, 50vw"
                   className="object-cover transition-transform duration-[1200ms] ease-out-expo hover:scale-[1.05]"
+                  style={{ objectPosition: image.objectPosition ?? "center" }}
                 />
               </div>
             ))}
           </div>
-
-          {carReview && (
-            <figure className="surface-card mt-6 p-6">
-              <div className="mb-3 flex gap-0.5 text-gold">
-                {Array.from({ length: carReview.rating }).map((_, i) => (
-                  <StarIcon key={i} className="h-4 w-4" />
-                ))}
-              </div>
-              <blockquote className="text-[15px] leading-relaxed text-ink-soft">
-                “{carReview.quote}”
-              </blockquote>
-              <figcaption className="mt-3 text-sm text-ink-muted">
-                <span className="font-medium text-ink">{carReview.name}</span> ·{" "}
-                {carReview.date}
-              </figcaption>
-            </figure>
-          )}
         </Reveal>
 
         {/* info */}
@@ -171,7 +154,7 @@ export default function CarDetailPage({
             <span className="text-ink/20">·</span>
             <span>Rocznik {car.year}</span>
             <span className="text-ink/20">·</span>
-            <span>{car.seats} miejsca</span>
+            <span>{formatCapacityLabel(car.seats)}</span>
             <span className="inline-flex items-center gap-1.5">
               <span className={`h-2 w-2 rounded-full ${meta.dot}`} />
               <span className={meta.text}>{car.availabilityNote}</span>
@@ -251,7 +234,7 @@ export default function CarDetailPage({
                 <li key={a.id} className="flex justify-between py-2.5 text-sm">
                   <span className="text-ink-soft">{a.name}</span>
                   <span className="font-medium text-ink">
-                    +{formatPLNShort(a.price)}
+                    {a.quote ? "indywidualnie" : `+${formatPLNShort(a.price)}`}
                   </span>
                 </li>
               ))}

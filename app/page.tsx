@@ -7,7 +7,7 @@ import { CtaBand } from "@/components/CtaBand";
 import { Reveal } from "@/components/Reveal";
 import { faq } from "@/data/faq";
 import { buildPageMetadata, breadcrumbJsonLd, faqJsonLd } from "@/lib/seo";
-import { CalendarIcon, CarIcon, RouteIcon } from "@/components/icons";
+import { CalendarIcon, CarIcon, PinIcon } from "@/components/icons";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Auto do ślubu Warszawa",
@@ -28,17 +28,17 @@ const homeFaqSchema = faqJsonLd(faq);
 const steps = [
   {
     title: "Wybieracie datę",
-    text: "Od razu sprawdzacie termin dla wybranego auta.",
+    text: "Od razu sprawdzacie termin i przechodzicie dalej bez wymiany kilku wiadomości.",
     icon: CalendarIcon,
   },
   {
-    title: "Dodajecie trasę",
-    text: "Odbiór, ceremonia, sala i ewentualna sesja w jednym planie.",
-    icon: RouteIcon,
+    title: "Układacie plan dnia",
+    text: "Odbiór, ceremonia, sala i sesja zgodnie z Waszą koncepcją.",
+    icon: PinIcon,
   },
   {
-    title: "Dobieracie auto",
-    text: "Mercedes S-Klasa albo Maserati Ghibli z kierowcą.",
+    title: "Wybieracie auto",
+    text: "Porównujecie dostępne modele i wybieracie samochód pasujący do stylu uroczystości.",
     icon: CarIcon,
   },
 ];
@@ -73,8 +73,8 @@ export default function HomePage() {
         <Reveal>
           <SectionHeading
             eyebrow="Konfigurator"
-            title="Wycena zależy od Waszej trasy."
-            subtitle="Najpierw podajecie realny plan dnia, a potem prosicie o potwierdzenie terminu."
+            title="Wszystko zgodnie z Waszą koncepcją."
+            subtitle="Podajecie realny plan dnia, wybieracie auto i prosicie o potwierdzenie terminu bez sztywnego pakietu."
           />
         </Reveal>
         <div className="mt-10 grid gap-6 md:grid-cols-3">
